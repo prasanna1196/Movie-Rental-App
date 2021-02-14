@@ -11,7 +11,7 @@ const User = require("../models/User");
 
 router.get("/", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user);
     if (user.role === "admin") {
       res.redirect("http://localhost:5000/api/admin");
     }

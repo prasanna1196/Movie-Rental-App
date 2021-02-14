@@ -10,7 +10,7 @@ const User = require("../models/User");
 
 router.get("/", adminAuth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user);
     res.json({ user, msg: "redirect success" });
   } catch (err) {
     console.error(err.message);

@@ -27,7 +27,8 @@ router.post("/", adminAuth, async (req, res) => {
       year,
       director,
       starCast,
-      category,
+      fhd,
+      uhd,
     });
 
     const movie = await newMovie.save();
