@@ -12,6 +12,12 @@ const RentSchema = mongoose.Schema({
   amount: {
     type: Number,
   },
+  address: {
+    type: String,
+  },
+  phone: {
+    type: Number,
+  },
   rentedOn: {
     type: Object,
   },

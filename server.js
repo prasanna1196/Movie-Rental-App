@@ -13,6 +13,7 @@ connectDB();
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/admin", require("./routes/admin"));
+app.use("/api/myAccount", require("./routes/myAccount"));
 app.use("/api/movies", require("./routes/movies"));
 app.use("/api/rent", require("./routes/rent"));
 

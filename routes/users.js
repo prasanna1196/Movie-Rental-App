@@ -13,6 +13,7 @@ router.post(
     check("name", "name is needed").not().isEmpty(),
     check("email", "Valid email please").isEmail(),
     check("password", "invalid").isLength({ min: 6 }),
+    check("phone", "Provide 10 digit phone number"),
   ],
   async (req, res) => {
     // (req.body) || (req) both will do
@@ -22,7 +23,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, password, phone } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -35,6 +36,7 @@ router.post(
         name,
         email,
         password,
+        phone,
       });
 
       const salt = await bcrypt.genSalt(10);
