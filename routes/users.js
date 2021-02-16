@@ -13,7 +13,10 @@ router.post(
     check("name", "name is needed").not().isEmpty(),
     check("email", "Valid email please").isEmail(),
     check("password", "invalid").isLength({ min: 6 }),
-    check("phone", "Provide 10 digit phone number"),
+    check("phone", "Provide 10 digit phone number").isLength({
+      min: 10,
+      max: 10,
+    }),
   ],
   async (req, res) => {
     // (req.body) || (req) both will do

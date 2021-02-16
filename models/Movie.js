@@ -22,9 +22,13 @@ const MovieSchema = mongoose.Schema({
     type: Array,
     required: true,
   },
+  dvd: {
+    type: Number,
+    default: 10,
+  },
   fhd: {
     type: Number,
-    default: 5,
+    default: 10,
   },
   uhd: {
     type: Number,

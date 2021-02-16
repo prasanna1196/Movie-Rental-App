@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
+const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
 
@@ -18,27 +19,49 @@ router.get("/", auth, async (req, res) => {
 
 // Change account details
 // access    Private
-router.patch("/", auth, async (req, res) => {
-  const { name, address, phone } = req.body;
+router.patch(
+  "/",
+  auth,
+  [
+    check("name", "Name should be minimum 3 characters long and maximum 30")
+      .optional()
+      .isString()
+      .isLength({ min: 3, max: 30 }),
+    check(
+      "address",
+      "Address should be minimum 15 characters long and maximum 150"
+    )
+      .isString()
+      .isLength({ min: 15, max: 150 }),
+    check("phone", "Provide a valid 10 digit phone number")
+      .optional()
+      .isNumeric()
+      .isLength({ min: 10, max: 10 }),
+  ],
+  async (req, res) => {
+    const { name, address, phone } = req.body;
 
-  const profileFields = {};
+    const errors = validationResult(req);
 
-  if (phone.toString().length !== 10) {
-    return res.status(400).send("Invalid number");
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    const profileFields = {};
+
+    if (name) profileFields.name = name;
+    if (address) profileFields.address = address;
+    if (phone) profileFields.phone = phone;
+
+    try {
+      let profile = await User.findByIdAndUpdate(
+        req.user,
+        { $set: profileFields },
+        { new: true }
+      );
+      await res.json({ profile });
+    } catch (err) {}
   }
-
-  if (name) profileFields.name = name;
-  if (address) profileFields.address = address;
-  if (phone) profileFields.phone = phone;
-
-  try {
-    let profile = await User.findByIdAndUpdate(
-      req.user,
-      { $set: profileFields },
-      { new: true }
-    );
-    await res.json({ profile });
-  } catch (err) {}
-});
+);
 
 module.exports = router;

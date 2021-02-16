@@ -9,6 +9,9 @@ const RentSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
+  quality: {
+    type: String,
+  },
   amount: {
     type: Number,
   },
