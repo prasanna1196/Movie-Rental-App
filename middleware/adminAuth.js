@@ -16,7 +16,6 @@ module.exports = async function (req, res, next) {
 
     const isAdmin = await User.findById(decoded.id);
     if (isAdmin.role === "admin") {
-      console.log(typeof isAdmin.role);
       req.user = decoded.id;
     }
     // else if (isAdmin.role === "customer") {
