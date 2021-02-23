@@ -1,5 +1,19 @@
 const mongoose = require("mongoose");
 
+const reviewSchema = mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    rating: { type: Number, required: true },
+    comment: { type: String, required: true },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const MovieSchema = mongoose.Schema({
   name: {
     type: String,
@@ -18,6 +32,12 @@ const MovieSchema = mongoose.Schema({
     min: 1,
     max: 100,
   },
+  genre: {
+    type: String,
+  },
+  language: {
+    type: String,
+  },
   starCast: {
     type: Array,
     required: true,
@@ -34,6 +54,10 @@ const MovieSchema = mongoose.Schema({
     type: Number,
     default: 5,
   },
+  popularity: {
+    type: Number,
+  },
+  reviews: [reviewSchema],
   date: {
     type: Date,
     default: Date.now,

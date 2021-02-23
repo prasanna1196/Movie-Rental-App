@@ -62,6 +62,7 @@ router.patch("/renew/:id", auth, async (req, res) => {
 });
 
 // Get the list of movies filed for return
+// Admin only access
 router.get("/approve", adminAuth, async (req, res) => {
   try {
     const approve = await ReturnMovie.find();
@@ -73,6 +74,7 @@ router.get("/approve", adminAuth, async (req, res) => {
 });
 
 // Approve return
+// Admin only access
 router.patch("/approve/:id", adminAuth, async (req, res) => {
   try {
     const approve = await ReturnMovie.findById(req.params.id);
