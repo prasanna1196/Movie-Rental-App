@@ -16,7 +16,6 @@ import {
   Close,
   Menu,
   MonetizationOn,
-  NotificationsNone,
   PowerSettingsNew,
   Search,
 } from "@material-ui/icons";
@@ -27,7 +26,7 @@ const useStyles = makeStyles({
     marginRight: "0px",
   },
   searchInput: {
-    opacity: "0.6",
+    // opacity: "0.6",
     padding: "0px 8px",
     fontSize: "0.8rem",
     backgroundColor: "#f0ffff",
@@ -58,7 +57,10 @@ const Navbar = () => {
           <Grid container alignItems="center">
             <Grid item style={{ marginRight: "10px" }}>
               <IconButton>
-                <Menu style={{ color: "#fff" }} onClick={() => setOpen(true)} />
+                <Menu
+                  style={{ color: "#ADFF2F" }}
+                  onClick={() => setOpen(true)}
+                />
               </IconButton>
             </Grid>
             <Grid item>
@@ -66,6 +68,7 @@ const Navbar = () => {
                 variant="h4"
                 style={{
                   fontFamily: "'Graphik', Helvetica, Arial, sans-serif",
+                  color: "#ADFF2F",
                 }}
               >
                 Nutflix
@@ -76,7 +79,10 @@ const Navbar = () => {
             <Grid item style={{ marginLeft: "auto", marginRight: "20px" }}>
               <InputBase
                 className={classes.searchInput}
-                placeholder="Search Topics"
+                style={{
+                  border: "3px solid #ADFF2F",
+                }}
+                placeholder="Search Movies"
                 startAdornment={<Search fontSize="small" />}
               />
             </Grid>
@@ -84,16 +90,16 @@ const Navbar = () => {
             <Grid item>
               <IconButton>
                 <Badge badgeContent={4} color="secondary">
-                  <MonetizationOn style={{ color: "#fff" }} />
+                  <MonetizationOn style={{ color: "#ADFF2F" }} />
                 </Badge>
               </IconButton>
               <IconButton>
                 <Badge badgeContent={4} color="primary">
-                  <ChatBubbleOutline style={{ color: "#fff" }} />
+                  <ChatBubbleOutline style={{ color: "#ADFF2F" }} />
                 </Badge>
               </IconButton>
               <IconButton>
-                <PowerSettingsNew style={{ color: "#fff" }} />
+                <PowerSettingsNew style={{ color: "#ADFF2F" }} />
               </IconButton>
             </Grid>
           </Grid>

@@ -7,15 +7,16 @@ import {
 } from "@material-ui/core";
 
 import Navbar from "./layout/Navbar";
+import Login from "./auth/login";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#000000",
+      main: "#0F495C",
       light: "#3c44b126",
     },
     secondary: {
-      main: "#0000ff",
+      main: "#ADFF2F",
       light: "#f8324526",
     },
     background: {
@@ -45,6 +46,9 @@ const theme = createMuiTheme({
 const useStyles = makeStyles({
   appMain: {
     width: "100%",
+    height: "100vh",
+    display: "flex",
+    flexFlow: "column",
   },
 });
 
@@ -55,7 +59,10 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <div className={classes.appMain}>
         <Navbar />
+
+        <Login />
       </div>
+
       <CssBaseline />
     </ThemeProvider>
   );
