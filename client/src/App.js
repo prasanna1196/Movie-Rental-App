@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 
 import Navbar from "./layout/Navbar";
+import Register from "./auth/register";
 import Login from "./auth/login";
 
 const theme = createMuiTheme({
@@ -59,8 +60,8 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <div className={classes.appMain}>
         <Navbar />
-
-        <Login />
+        {/* <Login /> */}
+        <Register />
       </div>
 
       <CssBaseline />

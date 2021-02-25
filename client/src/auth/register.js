@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   //   justifyContent: "center",
   // },
 
-  login: {
+  register: {
     height: "100%",
     justifyContent: "center",
     display: "flex",
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   pageContent: {
     width: "320px",
-    height: "380px",
+    height: "510px",
     // display: "flex",
     // flexFlow: "column",
     // alignContent: "center",
@@ -50,19 +50,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Register = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.login}>
+    <div className={classes.register}>
       <Paper elevation={10} className={classes.pageContent}>
         <Grid align="center" justify="center">
           <Typography className={classes.title} variant="h4" component="div">
-            Sign In
+            Register
           </Typography>
         </Grid>
-        <form autoComplete="off">
+        <form autoComplete="off" className={classes.root}>
           <Grid align="center">
+            <TextField
+              className={classes.textField}
+              fullWidth
+              size="small"
+              variant="outlined"
+              name="fullName"
+              label="Full Name"
+            />
             <TextField
               className={classes.textField}
               fullWidth
@@ -78,8 +86,16 @@ const Login = () => {
               type="password"
               size="small"
               variant="outlined"
-              name="password"
-              label="Password"
+              name="Password"
+              label="password"
+            />
+            <TextField
+              className={classes.textField}
+              fullWidth
+              size="small"
+              variant="outlined"
+              name="mobile"
+              label="Mobile"
             />
             <Button
               className={classes.signIn}
@@ -88,13 +104,13 @@ const Login = () => {
               color="primary"
               type="submit"
             >
-              Login
+              Submit
             </Button>
           </Grid>
         </form>
         <Grid>
           <Typography variant="subtitle2" style={{ margin: "20px 0 5px" }}>
-            Don't have an Account? Register
+            Already have an Account? Login
           </Typography>
         </Grid>
       </Paper>
@@ -102,4 +118,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
