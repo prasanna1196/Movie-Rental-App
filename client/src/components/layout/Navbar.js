@@ -1,4 +1,6 @@
 import React, { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
+import Payments from "../payments/Payments";
 import {
   AppBar,
   Badge,
@@ -56,11 +58,8 @@ const Navbar = () => {
         <Toolbar>
           <Grid container alignItems="center">
             <Grid item style={{ marginRight: "10px" }}>
-              <IconButton>
-                <Menu
-                  style={{ color: "#ADFF2F" }}
-                  onClick={() => setOpen(true)}
-                />
+              <IconButton onClick={() => setOpen(true)}>
+                <Menu style={{ color: "#ADFF2F" }} />
               </IconButton>
             </Grid>
             <Grid item>
@@ -88,18 +87,21 @@ const Navbar = () => {
             </Grid>
 
             <Grid item>
-              <IconButton>
-                <Badge badgeContent={4} color="secondary">
-                  <MonetizationOn style={{ color: "#ADFF2F" }} />
-                </Badge>
-              </IconButton>
+              <Payments />
               <IconButton>
                 <Badge badgeContent={4} color="primary">
                   <ChatBubbleOutline style={{ color: "#ADFF2F" }} />
                 </Badge>
               </IconButton>
               <IconButton>
-                <PowerSettingsNew style={{ color: "#ADFF2F" }} />
+                <Typography>
+                  <Link
+                    to="/login"
+                    style={{ color: "#ADFF2F", textDecoration: "none" }}
+                  >
+                    Sign In
+                  </Link>
+                </Typography>
               </IconButton>
             </Grid>
           </Grid>
@@ -112,11 +114,11 @@ const Navbar = () => {
         onClose={() => setOpen(false)}
       >
         <MenuItem>
-          <IconButton>
-            <Close onClick={() => setOpen(false)} />
+          <IconButton onClick={() => setOpen(false)}>
+            <Close />
           </IconButton>
         </MenuItem>
-        <MenuItem>Menu Item</MenuItem>
+        <MenuItem>Really Long Menu Item</MenuItem>
         <MenuItem>Menu Item 2</MenuItem>
       </Drawer>
     </Fragment>

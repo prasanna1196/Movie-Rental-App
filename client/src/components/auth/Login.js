@@ -1,18 +1,13 @@
-import React, { Fragment } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   makeStyles,
   Paper,
-  Toolbar,
-  InputBase,
   Grid,
   Typography,
   Button,
-  Avatar,
-  MuiThemeProvider,
-  createMuiTheme,
+  TextField,
 } from "@material-ui/core";
-import { AccountCircle, PersonAdd, Search } from "@material-ui/icons";
-import { TextField } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   // "& .MuiFormControl-root": {
@@ -30,12 +25,13 @@ const useStyles = makeStyles((theme) => ({
   },
   pageContent: {
     width: "320px",
-    height: "380px",
+    height: "400px",
     // display: "flex",
     // flexFlow: "column",
     // alignContent: "center",
     // justifyContent: "center",
     padding: 15,
+    color: "#0F495C",
   },
   title: {
     color: "#0F495C",
@@ -53,6 +49,47 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
 
+  const initialValues = { email: "", password: "" };
+
+  const [user, setUser] = useState(initialValues);
+  const [formError, setFormError] = useState({});
+
+  const { email, password } = user;
+
+  const validate = (fieldValues = user) => {
+    let temp = { ...formError };
+
+    if ("email" in fieldValues)
+      temp.email =
+        /$^|.+@.+..+/.test(fieldValues.email) && fieldValues.email.length > 1
+          ? ""
+          : "Email is not valid";
+    if ("password" in fieldValues)
+      temp.password =
+        fieldValues.password.length > 6
+          ? ""
+          : "Password should be atleast 3 characters long";
+
+    setFormError({
+      ...temp,
+    });
+
+    if (fieldValues == user) {
+      return Object.values(temp).every((x) => x == "");
+    }
+  };
+
+  const onChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+    // For simultanious form validation
+    // validate({ [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    validate(user);
+  };
+
   return (
     <div className={classes.login}>
       <Paper elevation={10} className={classes.pageContent}>
@@ -61,7 +98,7 @@ const Login = () => {
             Sign In
           </Typography>
         </Grid>
-        <form autoComplete="off">
+        <form autoComplete="off" onSubmit={onSubmit}>
           <Grid align="center">
             <TextField
               className={classes.textField}
@@ -71,6 +108,10 @@ const Login = () => {
               variant="outlined"
               name="email"
               label="Email"
+              value={email}
+              onChange={onChange}
+              error={formError.email ? true : false}
+              helperText={formError.email}
             />
             <TextField
               className={classes.textField}
@@ -80,6 +121,12 @@ const Login = () => {
               variant="outlined"
               name="password"
               label="Password"
+              value={password}
+              onChange={onChange}
+              {...(formError.password && {
+                error: true,
+                helperText: formError.password,
+              })}
             />
             <Button
               className={classes.signIn}
@@ -93,9 +140,21 @@ const Login = () => {
           </Grid>
         </form>
         <Grid>
-          <Typography variant="subtitle2" style={{ margin: "20px 0 5px" }}>
-            Don't have an Account? Register
-          </Typography>
+          <p
+            style={{
+              margin: "20px 0 5px",
+              fontWeight: "bold",
+              color: "#0F495C",
+            }}
+          >
+            Don't have an Account?{" "}
+            <Link
+              to="/register"
+              style={{ textDecoration: "none", color: "#0F495C" }}
+            >
+              Register
+            </Link>
+          </p>
         </Grid>
       </Paper>
     </div>

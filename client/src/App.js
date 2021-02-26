@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {
   createMuiTheme,
   CssBaseline,
@@ -6,9 +7,9 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 
-import Navbar from "./layout/Navbar";
-import Register from "./auth/register";
-import Login from "./auth/login";
+import Navbar from "./components/layout/Navbar";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
 
 const theme = createMuiTheme({
   palette: {
@@ -59,9 +60,13 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.appMain}>
-        <Navbar />
-        {/* <Login /> */}
-        <Register />
+        <Router>
+          <Navbar />
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+          </Switch>
+        </Router>
       </div>
 
       <CssBaseline />
