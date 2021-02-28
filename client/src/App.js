@@ -8,8 +8,13 @@ import {
 } from "@material-ui/core";
 
 import Navbar from "./components/layout/Navbar";
+import Alerts from "./components/layout/Alerts";
+import Home from "./Home";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+
+import AuthState from "./context/auth/AuthState";
+import AlertState from "./context/alert/AlertState";
 
 const theme = createMuiTheme({
   palette: {
@@ -59,15 +64,21 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.appMain}>
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-          </Switch>
-        </Router>
-      </div>
+      <AuthState>
+        <AlertState>
+          <div className={classes.appMain}>
+            <Router>
+              <Navbar />
+              <Alerts />
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
+              </Switch>
+            </Router>
+          </div>
+        </AlertState>
+      </AuthState>
 
       <CssBaseline />
     </ThemeProvider>

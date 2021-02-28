@@ -1,6 +1,5 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import Payments from "../payments/Payments";
 import {
   AppBar,
   Badge,
@@ -18,9 +17,11 @@ import {
   Close,
   Menu,
   MonetizationOn,
-  PowerSettingsNew,
   Search,
 } from "@material-ui/icons";
+
+import Payments from "../payments/Payments";
+import AuthContext from "../../context/auth/authContext";
 
 const useStyles = makeStyles({
   root: {
@@ -43,14 +44,55 @@ const useStyles = makeStyles({
   },
 });
 
-// #0c111b (hotstar background)
-// #f0ffff (white shade)
-
 const Navbar = () => {
   const classes = useStyles();
 
+  const authContext = useContext(AuthContext);
+
+  const { isAuthenticated, logout, user } = authContext;
+
   // Drawer open and close
   const [open, setOpen] = useState(false);
+
+  const onLogout = () => {
+    logout();
+  };
+
+  const authLinks = (
+    <Grid item>
+      <Payments />
+      <IconButton>
+        <Badge badgeContent={4} color="primary">
+          <ChatBubbleOutline style={{ color: "#ADFF2F" }} />
+        </Badge>
+      </IconButton>
+      <IconButton onClick={onLogout}>
+        <Typography>
+          <Link
+            to="/login"
+            style={{ color: "#ADFF2F", textDecoration: "none" }}
+          >
+            Logout
+          </Link>
+        </Typography>
+      </IconButton>
+    </Grid>
+  );
+
+  const guestLinks = (
+    <Grid item>
+      <IconButton>
+        <Typography>
+          <Link
+            to="/login"
+            style={{ color: "#ADFF2F", textDecoration: "none" }}
+          >
+            Sign In
+          </Link>
+        </Typography>
+      </IconButton>
+    </Grid>
+  );
 
   return (
     <Fragment>
@@ -65,10 +107,11 @@ const Navbar = () => {
             <Grid item>
               <Typography
                 variant="h4"
-                style={{
-                  fontFamily: "'Graphik', Helvetica, Arial, sans-serif",
-                  color: "#ADFF2F",
-                }}
+                color="secondary"
+                // style={{
+                //   fontFamily: "'Graphik', Helvetica, Arial, sans-serif",
+                //   color: "#ADFF2F",
+                // }}
               >
                 Nutflix
               </Typography>
@@ -85,25 +128,7 @@ const Navbar = () => {
                 startAdornment={<Search fontSize="small" />}
               />
             </Grid>
-
-            <Grid item>
-              <Payments />
-              <IconButton>
-                <Badge badgeContent={4} color="primary">
-                  <ChatBubbleOutline style={{ color: "#ADFF2F" }} />
-                </Badge>
-              </IconButton>
-              <IconButton>
-                <Typography>
-                  <Link
-                    to="/login"
-                    style={{ color: "#ADFF2F", textDecoration: "none" }}
-                  >
-                    Sign In
-                  </Link>
-                </Typography>
-              </IconButton>
-            </Grid>
+            {isAuthenticated ? authLinks : guestLinks}
           </Grid>
         </Toolbar>
       </AppBar>

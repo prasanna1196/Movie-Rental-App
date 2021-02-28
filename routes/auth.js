@@ -12,10 +12,10 @@ const User = require("../models/User");
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user);
-    if (user.role === "admin") {
-      res.redirect("http://localhost:5000/api/admin");
-    }
-    res.json(user);
+    // if (user.role === "admin") {
+    //   return res.redirect("http://localhost:5000/api/admin");
+    // }
+    return res.json(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

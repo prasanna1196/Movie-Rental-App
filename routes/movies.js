@@ -19,12 +19,13 @@ router.get("/", auth, async (req, res) => {
 
 // Add new movies
 router.post("/", adminAuth, async (req, res) => {
-  const { name, year, director, starCast, dvd, fhd, uhd } = req.body;
+  const { name, year, language, director, starCast, dvd, fhd, uhd } = req.body;
 
   try {
     const newMovie = new Movie({
       name,
       year,
+      language,
       director,
       starCast,
       dvd,
