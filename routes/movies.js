@@ -7,7 +7,7 @@ const auth = require("../middleware/auth");
 const Movie = require("../models/Movie");
 
 // Get the list of movies
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const movies = await Movie.find().sort({ quantity: 1 });
     res.json(movies);

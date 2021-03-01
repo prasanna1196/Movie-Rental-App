@@ -43,7 +43,7 @@ const MovieState = (props) => {
   };
 
   return (
-    <ContactContext.Provider
+    <MovieContext.Provider
       value={{
         movies: state.movies,
         current: state.current,
@@ -61,6 +61,8 @@ const MovieState = (props) => {
       }}
     >
       {props.children}
-    </ContactContext.Provider>
+    </MovieContext.Provider>
   );
 };
+
+export default MovieState;

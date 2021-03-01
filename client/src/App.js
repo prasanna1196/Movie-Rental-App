@@ -12,9 +12,11 @@ import Alerts from "./components/layout/Alerts";
 import Home from "./Home";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import Movies from "./components/movies/Movies";
 
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
+import MovieState from "./context/movie/MovieState";
 
 const theme = createMuiTheme({
   palette: {
@@ -66,17 +68,19 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <AuthState>
         <AlertState>
-          <div className={classes.appMain}>
-            <Router>
-              <Navbar />
-              <Alerts />
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/register" component={Register} />
-              </Switch>
-            </Router>
-          </div>
+          <MovieState>
+            <div className={classes.appMain}>
+              <Router>
+                <Navbar />
+                <Alerts />
+                <Switch>
+                  <Route exact path="/" component={Movies} />
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/register" component={Register} />
+                </Switch>
+              </Router>
+            </div>
+          </MovieState>
         </AlertState>
       </AuthState>
 
