@@ -7,6 +7,8 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 
+import "./App.css";
+
 import Navbar from "./components/layout/Navbar";
 import Alerts from "./components/layout/Alerts";
 import Home from "./Home";
@@ -35,6 +37,7 @@ const theme = createMuiTheme({
 
   // #0c111b (hotstar background)
   // #f0ffff (white shade)
+  // #e5eaee (grey ish background)
 
   // Global changes
   overrides: {

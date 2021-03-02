@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import MovieContext from "../../context/movie/movieContext";
-import MovieCard from "./MovieCard";
+import MovieItem from "./MovieItem";
 
 const Movies = () => {
   const movieContext = useContext(MovieContext);
@@ -17,6 +17,7 @@ const Movies = () => {
   let baseURL = "https://image.tmdb.org/t/p/w500";
 
   const { movies, loading, movieApi } = some;
+
   const getMovies = async () => {
     const response = await axios.get("/api/movies");
 
@@ -39,7 +40,7 @@ const Movies = () => {
 
     // response.data.forEach((res) => console.log(res.name));
     setSome({ loading: false, movies: response.data, movieApi: tmdb });
-    console.log(movieApi);
+    // console.log(movies);
   };
 
   useEffect(() => {
@@ -47,17 +48,19 @@ const Movies = () => {
   }, []);
 
   return (
-    <Fragment>
-      {!loading && movies !== null ? (
-        <div>
-          {/* {movies[2].name} */}
-
-          <img src={`${baseURL}${movie.results[0].poster_path}`} />
+    <div>
+      {!loading && movies !== null && movieApi.length == movies.length ? (
+        <div className="movie-container">
+          {movieApi.map((movie, index) => (
+            // <img src={`${baseURL}${movie.results[0].poster_path}`} />
+            <MovieItem key={movie.results[0].id} movie={movie.results[0]} />
+          ))}
+          {/* <div>{movieApi[3].results[0].title}</div> */}
         </div>
       ) : (
         <div>loading...</div>
       )}
-    </Fragment>
+    </div>
   );
 };
 
