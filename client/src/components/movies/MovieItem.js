@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const MovieItem = ({ movie }) => {
-  const { title, release_date, poster_path, overview, vote_average } = movie;
+  const { title, poster_path, overview, vote_average } = movie;
 
   const baseURL = "https://image.tmdb.org/t/p/w500";
 
@@ -15,7 +16,11 @@ const MovieItem = ({ movie }) => {
         </div>
       </div>
       <div className="movie-info">
-        <h4>{title}</h4>
+        <h4>
+          <Link className="link-style" to={`/movies/${title}`}>
+            {title}
+          </Link>
+        </h4>
         <span>{vote_average}</span>
       </div>
     </div>

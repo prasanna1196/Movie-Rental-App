@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  REDIRECT_USER,
   CLEAR_ERRORS,
 } from "../types";
 
@@ -41,6 +42,11 @@ export default (state, action) => {
         loading: false,
         user: null,
         error: action.payload,
+      };
+    case REDIRECT_USER:
+      return {
+        ...state,
+        prevLocation: action.payload,
       };
     case CLEAR_ERRORS:
       return {

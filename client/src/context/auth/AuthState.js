@@ -11,6 +11,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  REDIRECT_USER,
   CLEAR_ERRORS,
 } from "../types";
 
@@ -20,6 +21,7 @@ const AuthState = (props) => {
     isAuthenticated: null,
     loading: true,
     user: null,
+    prevLocation: "/",
     error: null,
   };
 
@@ -91,6 +93,10 @@ const AuthState = (props) => {
   //Logout
   const logout = () => dispatch({ type: LOGOUT });
 
+  //Redirect User
+  const redirectUser = (location) =>
+    dispatch({ type: REDIRECT_USER, payload: location });
+
   // Clear errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
@@ -101,11 +107,13 @@ const AuthState = (props) => {
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
         user: state.user,
+        prevLocation: state.prevLocation,
         error: state.error,
         loadUser,
         register,
         login,
         logout,
+        redirectUser,
         clearErrors,
       }}
     >

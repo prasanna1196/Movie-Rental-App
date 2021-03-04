@@ -15,6 +15,7 @@ import Home from "./Home";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Movies from "./components/movies/Movies";
+import MovieDetails from "./components/movies/MovieDetails";
 
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
@@ -80,6 +81,7 @@ const App = () => {
                   <Route exact path="/" component={Movies} />
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/register" component={Register} />
+                  <Route exact path="/movies/:title" component={MovieDetails} />
                 </Switch>
               </Router>
             </div>

@@ -2,30 +2,19 @@ import React, { useReducer, useState } from "react";
 import axios from "axios";
 import MovieContext from "./movieContext";
 import movieReducer from "./movieReducer";
-import {
-  GET_MOVIES,
-  ADD_MOVIE,
-  DELETE_MOVIE,
-  SET_CURRENT,
-  CLEAR_CURRENT,
-  UPDATE_MOVIE,
-  FILTER_MOVIES,
-  CLEAR_FILTER,
-  MOVIE_ERROR,
-  CLEAR_MOVIES,
-} from "../types";
+import { GET_MOVIES, GET_ONE_MOVIE, MOVIE_ERROR } from "../types";
 
 const MovieState = (props) => {
   const initialState = {
+    loading: true,
     movies: null,
-    current: null,
-    filtered: null,
+    oneMovie: null,
     error: null,
   };
 
   const [state, dispatch] = useReducer(movieReducer, initialState);
 
-  //Get Movies
+  // Get movies
   const getMovies = async () => {
     try {
       const res = await axios.get("/api/movies");
@@ -42,22 +31,32 @@ const MovieState = (props) => {
     }
   };
 
+  // Get one movie
+  const getOneMovie = async (title) => {
+    try {
+      const res = await axios.get(`/api/movies/${title}`);
+
+      dispatch({
+        type: GET_ONE_MOVIE,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
   return (
     <MovieContext.Provider
       value={{
         movies: state.movies,
-        current: state.current,
-        filtered: state.filtered,
+        oneMovie: state.oneMovie,
+        loading: state.loading,
         error: state.error,
         getMovies,
-        // addContact,
-        // deleteContact,
-        // clearContacts,
-        // setCurrent,
-        // clearCurrent,
-        // updateContact,
-        // filterContacts,
-        // clearFilter,
+        getOneMovie,
       }}
     >
       {props.children}

@@ -1,6 +1,35 @@
 /* * {
   box-sizing: border-box;
 } */
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+h1 {
+  margin: 0;
+}
+
+h3 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.inline {
+  display: inline;
+}
+
+.link-style {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+.movie-info h4:hover .link-style {
+  text-decoration: underline;
+}
 
 .movie-container {
   margin-top: 5px;
@@ -25,6 +54,7 @@
   position: relative;
   overflow: hidden;
 }
+
 .movie img {
   max-width: 100%;
 }
@@ -48,18 +78,98 @@
   opacity: 0.95;
   border-radius: 4px;
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
   padding: 5px;
-  transform: translateY(100%);
+  transform: translateX(100%);
   transition: transform 0.3s ease-in-out;
 }
 
 .movie-image:hover .movie-overview {
-  transform: translateY(0%);
+  transform: translateX(0%);
 }
 
 .movie:hover {
   transform: scale(1.1);
+  transition: transform 0.35s;
+}
+
+/* Movie details . . . Movie Details */
+.movie-details {
+  /* background-color: hsla(0, 9%, 7%, 0.877); */
+  background-color: #e5eaee;
+  color: #121212;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto 0;
+  padding: 25px 30px;
+}
+
+.movie-poster {
+  /* box-shadow: 3px 1px 5px #121212; */
+  margin-right: 30px;
+}
+
+.detail-info {
+  max-width: 900px;
+}
+
+.sub-text {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  margin-bottom: 30px;
+}
+
+.sub-text p {
+  padding-right: 15px;
+  margin-right: 15px;
+  border-right: 1px solid #3e9fbf;
+  color: #3e9fbf;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.movie-plot {
+  margin-bottom: 30px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.movie-credits {
+  margin: 25px 0;
+}
+
+.credit-item {
+  display: flex;
+  flex-flow: row;
+  margin: 15px 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.key {
+  margin-right: 15px;
+  color: #3e9fbf;
+}
+
+.movie-availability {
+  margin-top: 30px;
+}
+
+.quality {
+  margin-right: 5px;
+  color: #3e9fbf;
+}
+
+.quantity {
+  padding-right: 25px;
+}
+
+.rent-button {
+  margin-left: 0px;
+  margin-bottom: 50px;
+}
+
+/* Place order . . . Place Order */
+.order-page {
+  padding: 25px 30px;
 }

@@ -41,4 +41,15 @@ router.post("/", adminAuth, async (req, res) => {
   }
 });
 
+// Get a single movie
+router.get("/:title", async (req, res) => {
+  try {
+    const movie = await Movie.findOne({ name: req.params.title });
+    res.json(movie);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
