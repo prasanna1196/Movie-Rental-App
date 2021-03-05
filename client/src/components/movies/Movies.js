@@ -23,10 +23,11 @@ const Movies = () => {
 
     let tmdb = [];
     for (let res of response.data) {
-      let api = await axios.get(
+      let api = await fetch(
         `https://api.themoviedb.org/3/search/movie?api_key=82f3aa84f64fab6fc7f4286e28e9df24&query=${res.name}`
       );
-      tmdb = [...tmdb, api.data];
+      let apiData = await api.json();
+      tmdb = [...tmdb, apiData];
     }
 
     setSome({ loading: false, movies: response.data, movieApi: tmdb });

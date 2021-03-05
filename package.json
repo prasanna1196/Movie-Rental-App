@@ -14,15 +14,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.11.2",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.3.0",
     "config": "^3.3.3",
     "express": "^4.17.1",
     "express-validator": "^6.9.2",
     "jsonwebtoken": "^8.5.1",
-    "materialize-css": "^1.0.0-rc.2",
-    "mongoose": "^5.11.15"
+    "mongoose": "^5.11.15",
+    "stripe": "^8.137.0"
   }
 }

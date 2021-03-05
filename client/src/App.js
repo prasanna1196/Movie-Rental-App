@@ -16,6 +16,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Movies from "./components/movies/Movies";
 import MovieDetails from "./components/movies/MovieDetails";
+import PlaceOrder from "./components/order/PlaceOrder";
 
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
@@ -39,6 +40,7 @@ const theme = createMuiTheme({
   // #0c111b (hotstar background)
   // #f0ffff (white shade)
   // #e5eaee (grey ish background)
+  // #3e9fbf (Blue color for subtext and key)
 
   // Global changes
   overrides: {
@@ -82,6 +84,7 @@ const App = () => {
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/movies/:title" component={MovieDetails} />
+                  <Route exact path="/order/:title" component={PlaceOrder} />
                 </Switch>
               </Router>
             </div>

@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Button } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 import MovieContext from "../../context/movie/movieContext";
 import AuthContext from "../../context/auth/authContext";
@@ -24,20 +25,22 @@ const MovieDetails = ({ match, history }) => {
   const { clientLoading, details } = info;
 
   const getMovieDetails = async () => {
-    const response = await axios.get(
+    const res = await fetch(
       `http://www.omdbapi.com/?apikey=e96c9482&t=${match.params.title}`
     );
 
-    await getOneMovie(response.data.Title);
+    let response = await res.json();
 
-    setInfo({ clientLoading: false, details: response.data });
+    await getOneMovie(response.Title);
+
+    setInfo({ clientLoading: false, details: response });
 
     // console.log(oneMovie);
   };
 
   const onClick = () => {
     if (isAuthenticated) {
-      history.push("/");
+      history.push(`/order/${details.Title}`);
     } else {
       setAlert("Please login to proceed", "warning");
       history.push("/login");
@@ -60,7 +63,7 @@ const MovieDetails = ({ match, history }) => {
               </div>
               <div className="detail-info">
                 <div className="flex-row">
-                  <h1>{details.Title}</h1>
+                  <h1 style={{ color: "#fff12f" }}>{details.Title}</h1>
                 </div>
                 <div className="sub-text">
                   <p>{details.Year}</p>

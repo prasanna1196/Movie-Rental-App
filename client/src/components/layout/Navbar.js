@@ -20,7 +20,7 @@ import {
   Search,
 } from "@material-ui/icons";
 
-import Payments from "../payments/Payments";
+import Payments from "./Payments";
 import AuthContext from "../../context/auth/authContext";
 
 const useStyles = makeStyles({

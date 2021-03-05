@@ -98,8 +98,8 @@ p {
 /* Movie details . . . Movie Details */
 .movie-details {
   /* background-color: hsla(0, 9%, 7%, 0.877); */
-  background-color: #e5eaee;
-  color: #121212;
+  background-color: #121212;
+  color: #fff;
   width: 100%;
   height: 100%;
   margin: 0 auto 0;
@@ -125,7 +125,7 @@ p {
 .sub-text p {
   padding-right: 15px;
   margin-right: 15px;
-  border-right: 1px solid #3e9fbf;
+  border-right: 1px solid #b6ff2f;
   color: #3e9fbf;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
