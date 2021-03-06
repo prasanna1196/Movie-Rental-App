@@ -43,6 +43,7 @@ const MovieDetails = ({ match, history }) => {
       history.push(`/order/${details.Title}`);
     } else {
       setAlert("Please login to proceed", "warning");
+      redirectUser(`/movies/${match.params.title}`);
       history.push("/login");
     }
   };
@@ -57,7 +58,7 @@ const MovieDetails = ({ match, history }) => {
         (!clientLoading && !loading && oneMovie.name !== null,
         details !== null ? (
           <Fragment>
-            <div className="flex-row">
+            <div className="flex-row blah">
               <div className="movie-poster">
                 <img style={{ width: "100%" }} src={`${details.Poster}`} />
               </div>
@@ -115,33 +116,60 @@ const MovieDetails = ({ match, history }) => {
                       <p style={{ padding: "0 30px" }}>Rent Now</p>
                     </Button>
                   </div>
+                  {/* <div>
+                    <h2>Ratings </h2>
+                    <div className="credit-item">
+                      <p className="key">IMDb: </p>
+                      {details.imdbRating !== "N/A" ? (
+                        <p>{details.imdbRating}/10</p>
+                      ) : (
+                        <p>N/A</p>
+                      )}
+                    </div>
+                    <div className="credit-item">
+                      <p className="key">Rotten Tomatoes: </p>
+                      {details.Ratings[1].Value ? (
+                        <p>{details.Ratings[1].Value}</p>
+                      ) : (
+                        <p>N/A</p>
+                      )}
+                    </div>
+                    <div className="credit-item">
+                      <p className="key">Metacritic: </p>
+                      {details.Metascore !== "N/A" ? (
+                        <p>{details.Metascore}/100</p>
+                      ) : (
+                        <p>N/A</p>
+                      )}
+                    </div>
+                  </div> */}
                 </div>
-                <div>
-                  <h2>Ratings and Reviews</h2>
-                  <div className="credit-item">
-                    <p className="key">IMDb: </p>
-                    {details.imdbRating !== "N/A" ? (
-                      <p>{details.imdbRating}/10</p>
-                    ) : (
-                      <p>N/A</p>
-                    )}
-                  </div>
-                  <div className="credit-item">
-                    <p className="key">Rotten Tomatoes: </p>
-                    {details.Ratings[1].Value ? (
-                      <p>{details.Ratings[1].Value}</p>
-                    ) : (
-                      <p>N/A</p>
-                    )}
-                  </div>
-                  <div className="credit-item">
-                    <p className="key">Metacritic: </p>
-                    {details.Metascore !== "N/A" ? (
-                      <p>{details.Metascore}/100</p>
-                    ) : (
-                      <p>N/A</p>
-                    )}
-                  </div>
+              </div>
+              <div>
+                <h2>Ratings </h2>
+                <div className="credit-item">
+                  <p className="key">IMDb: </p>
+                  {details.imdbRating !== "N/A" ? (
+                    <p>{details.imdbRating}/10</p>
+                  ) : (
+                    <p>N/A</p>
+                  )}
+                </div>
+                <div className="credit-item">
+                  <p className="key">Rotten Tomatoes: </p>
+                  {details.Ratings[1].Value ? (
+                    <p>{details.Ratings[1].Value}</p>
+                  ) : (
+                    <p>N/A</p>
+                  )}
+                </div>
+                <div className="credit-item">
+                  <p className="key">Metacritic: </p>
+                  {details.Metascore !== "N/A" ? (
+                    <p>{details.Metascore}/100</p>
+                  ) : (
+                    <p>N/A</p>
+                  )}
                 </div>
               </div>
             </div>

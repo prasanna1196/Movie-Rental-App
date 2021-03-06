@@ -6,6 +6,10 @@
   flex-direction: row;
 }
 
+.blah {
+  justify-content: space-around;
+}
+
 h1 {
   margin: 0;
 }
@@ -112,7 +116,7 @@ p {
 }
 
 .detail-info {
-  max-width: 900px;
+  max-width: 800px;
 }
 
 .sub-text {

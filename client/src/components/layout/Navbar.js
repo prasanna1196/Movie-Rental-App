@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   AppBar,
@@ -22,6 +22,7 @@ import {
 
 import Payments from "./Payments";
 import AuthContext from "../../context/auth/authContext";
+import setAuthToken from "../../context/setAuthToken";
 
 const useStyles = makeStyles({
   root: {
@@ -49,10 +50,14 @@ const Navbar = () => {
 
   const authContext = useContext(AuthContext);
 
-  const { isAuthenticated, logout, user } = authContext;
+  const { isAuthenticated, logout, loadUser, user } = authContext;
 
   // Drawer open and close
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    loadUser();
+  }, [isAuthenticated]);
 
   const onLogout = () => {
     logout();

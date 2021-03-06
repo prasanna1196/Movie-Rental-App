@@ -21,6 +21,7 @@ import PlaceOrder from "./components/order/PlaceOrder";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 import MovieState from "./context/movie/MovieState";
+import setAuthToken from "./context/setAuthToken";
 
 const theme = createMuiTheme({
   palette: {
@@ -66,6 +67,10 @@ const useStyles = makeStyles({
     flexFlow: "column",
   },
 });
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
   const classes = useStyles();

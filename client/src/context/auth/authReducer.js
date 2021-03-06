@@ -42,6 +42,7 @@ export default (state, action) => {
         loading: false,
         user: null,
         error: action.payload,
+        prevLocation: "/",
       };
     case REDIRECT_USER:
       return {
