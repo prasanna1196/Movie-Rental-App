@@ -13,13 +13,6 @@ import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
 
 const useStyles = makeStyles((theme) => ({
-  // "& .MuiFormControl-root": {
-  //   // width: "250px",
-  //   margin: theme.spacing(2),
-  //   color: "#0F495C",
-  //   justifyContent: "center",
-  // },
-
   login: {
     height: "100%",
     justifyContent: "center",
@@ -29,10 +22,6 @@ const useStyles = makeStyles((theme) => ({
   pageContent: {
     width: "320px",
     height: "400px",
-    // display: "flex",
-    // flexFlow: "column",
-    // alignContent: "center",
-    // justifyContent: "center",
     padding: 15,
     color: "#0F495C",
   },

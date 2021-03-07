@@ -1,5 +1,6 @@
 export const GET_MOVIES = "GET_MOVIES";
 export const GET_ONE_MOVIE = "GET_ONE_MOVIE";
+export const PLACE_ORDER = "PLACE_ORDER";
 export const ADD_MOVIE = "ADD_MOVIE";
 export const DELETE_MOVIE = "DELETE_MOVIE";
 export const SET_CURRENT = "SET_CURRENT";

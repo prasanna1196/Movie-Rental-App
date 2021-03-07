@@ -31,7 +31,7 @@ router.get("/all", auth, async (req, res) => {
 
 // Rent a new movie
 router.post("/", auth, async (req, res) => {
-  let { movie, quality, address, phone, setDefaultAddress } = req.body;
+  let { movie, quality, address, setDefaultAddress } = req.body;
   let amount = 0;
 
   try {
@@ -41,9 +41,10 @@ router.post("/", auth, async (req, res) => {
     if (!address && !user.address) {
       return res
         .status(400)
-        .send(
-          "Please enter a valid address  or  Go to myAccount and set a default address"
-        );
+        .json({
+          msg:
+            "Please enter a valid address  or  Go to myAccount and set a default address",
+        });
     }
     if (!address && user.address) {
       // Use default address instead
@@ -51,24 +52,24 @@ router.post("/", auth, async (req, res) => {
     }
 
     // Use default phone of user account if no phone is provided
-    if (!phone) {
-      phone = user.phone;
-    }
+    // if (!phone) {
+    phone = user.phone;
+    // }
 
     // Find movie by its name
     const getMovie = await Movie.findOne({ name: movie });
+    console.log(getMovie);
 
     // Check if the user currently has a copy of this movie
     const current = await Rent.findOne({
-      movie: getMovie.id,
+      movie: getMovie._id,
       user: req.user,
       status: true,
     });
 
     if (current) {
-      return res
-        .status(400)
-        .send("User cannot order the same movie before returning it.");
+      console.log("alredy rented");
+      return res.status(400).json({ msg: "Already rented" });
     }
 
     // Set price based on quality
@@ -77,7 +78,6 @@ router.post("/", auth, async (req, res) => {
       if (getMovie.uhd > 1) {
         // Update the availability
         getMovie.uhd -= 1;
-        await getMovie.save();
       } else {
         return res.json({ msg: `Sorry, ${quality} format is out of stock` });
       }
@@ -85,7 +85,6 @@ router.post("/", auth, async (req, res) => {
       amount = 5;
       if (getMovie.fhd > 1) {
         getMovie.fhd -= 1;
-        await getMovie.save();
       } else {
         return res.json({ msg: `Sorry, ${quality} format is out of stock` });
       }
@@ -93,7 +92,6 @@ router.post("/", auth, async (req, res) => {
       amount = 2;
       if (getMovie.dvd > 1) {
         getMovie.dvd -= 1;
-        await getMovie.save();
       } else {
         return res.json({ msg: `Sorry, ${quality} format is out of stock` });
       }
@@ -111,12 +109,10 @@ router.post("/", auth, async (req, res) => {
 
     // Deduct credits from user
     user.credits -= amount;
-    await user.save();
 
     //Set entered address as default for further orders
     if (setDefaultAddress === true) {
       user.address = address;
-      await user.save();
     }
 
     // Create order object
@@ -132,6 +128,8 @@ router.post("/", auth, async (req, res) => {
     });
 
     // Complete order
+    await user.save();
+    await getMovie.save();
     const rental = await newRental.save();
     res.send(rental);
   } catch (err) {

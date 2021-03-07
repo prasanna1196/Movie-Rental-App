@@ -13,7 +13,7 @@ router.patch("/:id", auth, async (req, res) => {
   try {
     const order = await Rent.findById(req.params.id);
 
-    // Create a new applied for return entry
+    // Create a new "applied for return" entry
     const returnMovie = new ReturnMovie({
       orderID: order._id,
     });

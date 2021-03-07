@@ -57,7 +57,7 @@ const Navbar = () => {
 
   useEffect(() => {
     loadUser();
-  }, [isAuthenticated]);
+  }, []);
 
   const onLogout = () => {
     logout();

@@ -1,4 +1,4 @@
-import { GET_MOVIES, GET_ONE_MOVIE, MOVIE_ERROR } from "../types";
+import { GET_MOVIES, GET_ONE_MOVIE, PLACE_ORDER, MOVIE_ERROR } from "../types";
 
 export default (state, action) => {
   switch (action.type) {
@@ -13,6 +13,11 @@ export default (state, action) => {
         ...state,
         oneMovie: action.payload,
         loading: false,
+      };
+    case PLACE_ORDER:
+      return {
+        ...state,
+        rentDetails: action.payload,
       };
     case MOVIE_ERROR:
       return {
