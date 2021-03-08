@@ -31,7 +31,7 @@ export default (state, action) => {
       };
     case REGISTER_FAIL:
     case LOGIN_FAIL:
-    case AUTH_ERROR:
+
     case LOGOUT:
       //Same for all of the above cases
       localStorage.removeItem("token");
@@ -43,6 +43,10 @@ export default (state, action) => {
         user: null,
         error: action.payload,
         prevLocation: "/",
+      };
+    case AUTH_ERROR:
+      return {
+        ...state,
       };
     case REDIRECT_USER:
       return {

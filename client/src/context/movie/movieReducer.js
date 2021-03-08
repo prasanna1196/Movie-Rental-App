@@ -1,4 +1,10 @@
-import { GET_MOVIES, GET_ONE_MOVIE, PLACE_ORDER, MOVIE_ERROR } from "../types";
+import {
+  GET_MOVIES,
+  GET_ONE_MOVIE,
+  PLACE_ORDER,
+  MOVIE_ERROR,
+  CLEAR_ERRORS,
+} from "../types";
 
 export default (state, action) => {
   switch (action.type) {
@@ -23,6 +29,11 @@ export default (state, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

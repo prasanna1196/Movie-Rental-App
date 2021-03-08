@@ -31,7 +31,7 @@ router.get("/all", auth, async (req, res) => {
 
 // Rent a new movie
 router.post("/", auth, async (req, res) => {
-  let { movie, quality, address, setDefaultAddress } = req.body;
+  let { movie, quality, address, setDefaultAddress, phone } = req.body;
   let amount = 0;
 
   try {
@@ -39,12 +39,10 @@ router.post("/", auth, async (req, res) => {
 
     // Use default address of user account if no address is provided
     if (!address && !user.address) {
-      return res
-        .status(400)
-        .json({
-          msg:
-            "Please enter a valid address  or  Go to myAccount and set a default address",
-        });
+      return res.status(400).json({
+        msg:
+          "Please enter a valid address  or  Go to myAccount and set a default address",
+      });
     }
     if (!address && user.address) {
       // Use default address instead
@@ -52,9 +50,9 @@ router.post("/", auth, async (req, res) => {
     }
 
     // Use default phone of user account if no phone is provided
-    // if (!phone) {
-    phone = user.phone;
-    // }
+    if (!phone) {
+      phone = user.phone;
+    }
 
     // Find movie by its name
     const getMovie = await Movie.findOne({ name: movie });
@@ -74,26 +72,33 @@ router.post("/", auth, async (req, res) => {
 
     // Set price based on quality
     if (quality === "uhd") {
-      amount = 10;
+      amount = 100;
       if (getMovie.uhd > 1) {
         // Update the availability
         getMovie.uhd -= 1;
       } else {
-        return res.json({ msg: `Sorry, ${quality} format is out of stock` });
+        return res
+          .status(404)
+          .json({ msg: `Sorry, ${quality} format is out of stock` });
       }
     } else if (quality === "fhd") {
-      amount = 5;
+      amount = 70;
       if (getMovie.fhd > 1) {
         getMovie.fhd -= 1;
       } else {
-        return res.json({ msg: `Sorry, ${quality} format is out of stock` });
+        console.log("out of stock");
+        return res
+          .status(400)
+          .json({ msg: `Sorry, ${quality} format is out of stock` });
       }
     } else {
-      amount = 2;
+      amount = 50;
       if (getMovie.dvd > 1) {
         getMovie.dvd -= 1;
       } else {
-        return res.json({ msg: `Sorry, ${quality} format is out of stock` });
+        return res
+          .status(404)
+          .json({ msg: `Sorry, ${quality} format is out of stock` });
       }
     }
 
@@ -131,7 +136,7 @@ router.post("/", auth, async (req, res) => {
     await user.save();
     await getMovie.save();
     const rental = await newRental.save();
-    res.send(rental);
+    res.json(rental);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

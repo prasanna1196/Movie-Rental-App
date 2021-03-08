@@ -2,7 +2,13 @@ import React, { useReducer, useState } from "react";
 import axios from "axios";
 import MovieContext from "./movieContext";
 import movieReducer from "./movieReducer";
-import { GET_MOVIES, GET_ONE_MOVIE, PLACE_ORDER, MOVIE_ERROR } from "../types";
+import {
+  GET_MOVIES,
+  GET_ONE_MOVIE,
+  PLACE_ORDER,
+  MOVIE_ERROR,
+  CLEAR_ERRORS,
+} from "../types";
 
 const MovieState = (props) => {
   const initialState = {
@@ -71,6 +77,9 @@ const MovieState = (props) => {
     }
   };
 
+  // Clear errors
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
   return (
     <MovieContext.Provider
       value={{
@@ -82,6 +91,7 @@ const MovieState = (props) => {
         getMovies,
         getOneMovie,
         placeOrder,
+        clearErrors,
       }}
     >
       {props.children}

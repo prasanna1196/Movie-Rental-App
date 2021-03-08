@@ -176,6 +176,12 @@ p {
 /* Place order . . . Place Order */
 .order-page {
   display: flex;
+  justify-content: space-around;
   flex-direction: row;
-  padding: 25px 30px;
+  padding: 25px 0px;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: row;
 }
