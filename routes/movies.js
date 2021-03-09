@@ -41,10 +41,12 @@ router.post("/", adminAuth, async (req, res) => {
   }
 });
 
-// Get a single movie
+// Get a single movie by name
 router.get("/:title", async (req, res) => {
   try {
-    const movie = await Movie.findOne({ name: req.params.title });
+    const movie = await Movie.findOne({
+      $or: [{ _id: req.params.title }, { name: req.params.title }],
+    });
     res.json(movie);
   } catch (err) {
     console.error(err.message);

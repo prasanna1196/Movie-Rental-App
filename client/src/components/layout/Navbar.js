@@ -149,7 +149,14 @@ const Navbar = () => {
           </IconButton>
         </MenuItem>
         <MenuItem>Really Long Menu Item</MenuItem>
-        <MenuItem>Menu Item 2</MenuItem>
+        <MenuItem>
+          <Link
+            to="/myOrders"
+            style={{ color: "#0F495C", textDecoration: "none" }}
+          >
+            My Orders
+          </Link>
+        </MenuItem>
       </Drawer>
     </Fragment>
   );

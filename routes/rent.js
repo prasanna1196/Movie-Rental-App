@@ -10,8 +10,8 @@ const Rent = require("../models/Rent");
 // Get the current list of rented movies
 router.get("/", auth, async (req, res) => {
   try {
-    const user = await Rent.find({ user: req.user, status: true });
-    res.status(200).json({ myRentals: user });
+    const rentals = await Rent.find({ user: req.user, status: true });
+    res.status(200).json(rentals);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -21,8 +21,23 @@ router.get("/", auth, async (req, res) => {
 // Get all the movies rented by a user
 router.get("/all", auth, async (req, res) => {
   try {
-    const user = await Rent.find({ user: req.user });
-    res.status(200).json({ myRentals: user });
+    const rentals = await Rent.find({ user: req.user });
+    res.status(200).json(rentals);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Get one movie rented by user
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const rental = await Rent.findOne({
+      user: req.user,
+      _id: req.params.id,
+      status: true,
+    });
+    res.status(200).json(rental);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -56,7 +71,6 @@ router.post("/", auth, async (req, res) => {
 
     // Find movie by its name
     const getMovie = await Movie.findOne({ name: movie });
-    console.log(getMovie);
 
     // Check if the user currently has a copy of this movie
     const current = await Rent.findOne({
@@ -104,7 +118,9 @@ router.post("/", auth, async (req, res) => {
 
     // Check for minimum balance
     if (user.credits - amount < 20) {
-      return res.json({ msg: "Accout balance can't be less than 20" });
+      return res
+        .status(400)
+        .json({ msg: "Accout balance can't be less than 20" });
     }
 
     // Set current and dueDate
@@ -136,6 +152,7 @@ router.post("/", auth, async (req, res) => {
     await user.save();
     await getMovie.save();
     const rental = await newRental.save();
+    console.log(rental);
     res.json(rental);
   } catch (err) {
     console.error(err.message);

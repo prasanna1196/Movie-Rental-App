@@ -10,9 +10,7 @@ import {
   Radio,
   RadioGroup,
   FormControl,
-  FormLabel,
   FormControlLabel,
-  makeStyles,
   Checkbox,
 } from "@material-ui/core";
 
@@ -24,11 +22,13 @@ const PlaceOrder = ({ match, history }) => {
   const { isAuthenticated, loadUser, user } = authContext;
 
   const { setAlert } = alertContext;
+
   const {
     oneMovie,
     loading,
     getOneMovie,
     placeOrder,
+    rentDetails,
     error,
     clearErrors,
   } = movieContext;
@@ -54,14 +54,39 @@ const PlaceOrder = ({ match, history }) => {
     // console.log(oneMovie);
   };
 
+  useEffect(() => {
+    loadUser();
+    getMovieDetails();
+
+    if (error) {
+      setAlert(error, "error");
+      console.log(error);
+      clearErrors();
+    }
+  }, [error, isAuthenticated]);
+
+  // useEffect(() => {
+  //   if (user !== null) {
+  //     setOrder({
+  //       ...order,
+  //       quality: "dvd",
+  //       address: user.address,
+  //       setDefaultAddress: true,
+  //       amount: 50,
+  //     });
+  //     console.log(user.address);
+  //   }
+  // }, [user]);
+
   const initialOrder = {
     quality: "dvd",
-    address: "",
+    address: user.address,
     setDefaultAddress: true,
     amount: 50,
   };
 
   const [order, setOrder] = useState(initialOrder);
+  const [addressError, setAddressError] = useState({});
 
   const { quality, address, setDefaultAddress, amount } = order;
 
@@ -71,48 +96,59 @@ const PlaceOrder = ({ match, history }) => {
     if (quality === "dvd") setOrder({ ...order, amount: 50 });
   };
 
+  const validate = (fieldValues = order) => {
+    let temp = { ...addressError };
+
+    if ("address" in order)
+      temp.address =
+        fieldValues.address.length > 10
+          ? ""
+          : "Address should be atleast 10 characters long";
+
+    setAddressError({
+      ...temp,
+    });
+
+    if (fieldValues == order) {
+      return Object.values(temp).every((x) => x == "");
+    }
+  };
+
   const onChange = (e) => {
     setOrder({ ...order, [e.target.name]: e.target.value });
 
-    // setAmount(quality);
-
     // For simultanious form validation
-    // validate({ [e.target.name]: e.target.value });
-  };
-
-  const twoCalls = (e) => {
-    onChange(e);
-    setAmount(quality);
+    if (e.target.name !== "quality") {
+      validate({ [e.target.name]: e.target.value });
+    }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setAmount(quality);
-    placeOrder({
-      movie: details.Title,
-      quality,
-      address,
-      setDefaultAddress,
-    });
+    validate(order);
+    if (validate()) {
+      placeOrder({
+        movie: details.Title,
+        quality,
+        address,
+        setDefaultAddress,
+      });
+    }
     console.log(order);
   };
 
   useEffect(() => {
-    if (error) {
-      setAlert(error, "error");
-      console.log(error);
-      clearErrors();
+    if (rentDetails) {
+      // if (rentDetails._id) {
+      console.log(typeof rentDetails._id);
+      history.push(`/orderConfirmation/${rentDetails._id}`);
+      // }
     }
-    // async function takeit() {
-    loadUser();
-    getMovieDetails();
-    if (user !== null) {
-      setOrder({ ...order, address: user.address });
-      console.log(user.address);
-    }
-    // }
-    // takeit();
-  }, [error, isAuthenticated]);
+  }, [rentDetails]);
+
+  useEffect(() => {
+    setAmount(quality);
+  }, [quality]);
 
   return (
     <div>
@@ -157,9 +193,7 @@ const PlaceOrder = ({ match, history }) => {
                       row
                       name="quality"
                       value={quality}
-                      onChange={(e) => {
-                        onChange(e);
-                      }}
+                      onChange={onChange}
                     >
                       <FormControlLabel
                         value="uhd"
@@ -190,7 +224,9 @@ const PlaceOrder = ({ match, history }) => {
                   <div className="movie-credits">
                     <div className="credit-item">
                       <p className="key">Name: </p>
-                      <p>{user.name}</p>
+                      <p>
+                        {user.name.charAt(0).toUpperCase() + user.name.slice(1)}
+                      </p>
                     </div>
                     <div className="credit-item">
                       <p className="key">Email: </p>
@@ -209,6 +245,8 @@ const PlaceOrder = ({ match, history }) => {
                     label="Address"
                     value={address}
                     onChange={onChange}
+                    error={addressError.address ? true : false}
+                    helperText={addressError.address}
                   />
                   <div>
                     <FormControl>

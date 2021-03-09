@@ -6,6 +6,8 @@ import {
   GET_MOVIES,
   GET_ONE_MOVIE,
   PLACE_ORDER,
+  GET_RENTED_MOVIES,
+  GET_ONE_RENTED_MOVIE,
   MOVIE_ERROR,
   CLEAR_ERRORS,
 } from "../types";
@@ -15,7 +17,9 @@ const MovieState = (props) => {
     loading: true,
     movies: null,
     oneMovie: null,
+    rentedMovies: null,
     rentDetails: null,
+    oneRentedMovie: null,
     error: null,
   };
 
@@ -55,6 +59,23 @@ const MovieState = (props) => {
     }
   };
 
+  // Get a list of rented movies
+  const getRentedMovies = async () => {
+    try {
+      const res = await axios.get("/api/rent/all");
+
+      dispatch({
+        type: GET_RENTED_MOVIES,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
   // Rent a movie
   const placeOrder = async (order) => {
     const config = {
@@ -77,20 +98,49 @@ const MovieState = (props) => {
     }
   };
 
+  // Get one rented movie
+  const getOneRentedMovie = async (id) => {
+    try {
+      const res = await axios.get(`/api/rent/${id}`);
+
+      dispatch({
+        type: GET_ONE_RENTED_MOVIE,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  // Clear rental Details
+  const clearRentalDetails = () => {
+    dispatch({
+      type: MOVIE_ERROR,
+    });
+  };
+
   // Clear errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   return (
     <MovieContext.Provider
       value={{
+        loading: state.loading,
         movies: state.movies,
         oneMovie: state.oneMovie,
-        loading: state.loading,
+        rentedMovies: state.rentedMovies,
         rentDetails: state.rentDetails,
+        oneRentedMovie: state.oneRentedMovie,
         error: state.error,
         getMovies,
         getOneMovie,
         placeOrder,
+        getRentedMovies,
+        getOneRentedMovie,
+        clearRentalDetails,
         clearErrors,
       }}
     >
