@@ -41,11 +41,24 @@ router.post("/", adminAuth, async (req, res) => {
   }
 });
 
-// Get a single movie by name
-router.get("/:title", async (req, res) => {
+// Get a single movie by _id
+router.get("/:id", async (req, res) => {
   try {
     const movie = await Movie.findOne({
-      $or: [{ _id: req.params.title }, { name: req.params.title }],
+      _id: req.params.id,
+    });
+    res.json(movie);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Get a single movie by name
+router.get("/name/:title", async (req, res) => {
+  try {
+    const movie = await Movie.findOne({
+      name: req.params.title,
     });
     res.json(movie);
   } catch (err) {

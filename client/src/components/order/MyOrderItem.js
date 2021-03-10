@@ -5,10 +5,10 @@ import MovieContext from "../../context/movie/movieContext";
 const MyOrderItem = ({ rentedMovie }) => {
   const movieContext = useContext(MovieContext);
 
-  const { getOneMovie, oneMovie } = movieContext;
+  const { getOneMovieById, oneMovie } = movieContext;
 
   useEffect(() => {
-    getOneMovie(rentedMovie.movie);
+    getOneMovieById(rentedMovie.movie);
     if (oneMovie) {
       console.log(oneMovie);
     }

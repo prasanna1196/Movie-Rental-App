@@ -26,7 +26,7 @@ const PlaceOrder = ({ match, history }) => {
   const {
     oneMovie,
     loading,
-    getOneMovie,
+    getOneMovieByName,
     placeOrder,
     rentDetails,
     error,
@@ -47,7 +47,7 @@ const PlaceOrder = ({ match, history }) => {
 
     let response = await res.json();
 
-    await getOneMovie(response.Title);
+    await getOneMovieByName(response.Title);
 
     setInfo({ clientLoading: false, details: response });
 
@@ -270,7 +270,7 @@ const PlaceOrder = ({ match, history }) => {
                   </div>
                   <div className="flex-row">
                     <h2>Amount: </h2>
-                    <h2>{amount}</h2>
+                    <h2>{" " + amount}</h2>
                   </div>
 
                   <div style={{ margin: "10px 25px" }}>

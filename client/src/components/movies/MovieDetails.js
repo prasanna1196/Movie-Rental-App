@@ -15,7 +15,7 @@ const MovieDetails = ({ match, history }) => {
 
   const { isAuthenticated, prevLocation, redirectUser } = authContext;
   const { setAlert } = alertContext;
-  const { oneMovie, loading, getOneMovie } = movieContext;
+  const { oneMovie, loading, getOneMovieByName } = movieContext;
 
   const [info, setInfo] = useState({
     clientLoading: true,
@@ -31,7 +31,7 @@ const MovieDetails = ({ match, history }) => {
 
     let response = await res.json();
 
-    await getOneMovie(response.Title);
+    await getOneMovieByName(response.Title);
 
     setInfo({ clientLoading: false, details: response });
 

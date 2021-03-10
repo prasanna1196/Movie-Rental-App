@@ -42,10 +42,27 @@ const MovieState = (props) => {
     }
   };
 
-  // Get one movie
-  const getOneMovie = async (title) => {
+  // Get one movie by _id
+  const getOneMovieById = async (id) => {
     try {
-      const res = await axios.get(`/api/movies/${title}`);
+      const res = await axios.get(`/api/movies/${id}`);
+
+      dispatch({
+        type: GET_ONE_MOVIE,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  // Get one movie
+  const getOneMovieByName = async (title) => {
+    try {
+      const res = await axios.get(`/api/movies/name/${title}`);
 
       dispatch({
         type: GET_ONE_MOVIE,
@@ -136,7 +153,8 @@ const MovieState = (props) => {
         oneRentedMovie: state.oneRentedMovie,
         error: state.error,
         getMovies,
-        getOneMovie,
+        getOneMovieById,
+        getOneMovieByName,
         placeOrder,
         getRentedMovies,
         getOneRentedMovie,
