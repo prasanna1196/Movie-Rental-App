@@ -58,7 +58,7 @@ const Login = (props) => {
       props.history.push(prevLocation);
     }
 
-    if (error === ("Invalid Credentials" || "User does not exist")) {
+    if (error) {
       setAlert(error, "error");
       clearErrors();
     }

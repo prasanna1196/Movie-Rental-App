@@ -51,6 +51,8 @@ const MovieState = (props) => {
         type: GET_ONE_MOVIE,
         payload: res.data,
       });
+
+      return res.data;
     } catch (err) {
       dispatch({
         type: MOVIE_ERROR,

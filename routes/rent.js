@@ -160,4 +160,18 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
+// Calculate penalty for active orders
+router.get("/check/penalty", auth, async (req, res) => {
+  try {
+    const rentals = await Rent.find({ user: req.user, status: true });
+    for (let rental of rentals) {
+      console.log(rental.dueDate);
+    }
+    res.status(200).json(rentals);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
