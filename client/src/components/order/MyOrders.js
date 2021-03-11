@@ -3,12 +3,15 @@ import React, { useContext, useEffect, useState } from "react";
 import MyOrderItem from "./MyOrderItem";
 
 import MovieContext from "../../context/movie/movieContext";
-import AuthContext from "../../context/auth/authContext";
+import AlertContext from "../../context/alert/alertContext";
 import axios from "axios";
 
 const MyOrders = () => {
-  const authContext = useContext(AuthContext);
+  const alertContext = useContext(AlertContext);
   const movieContext = useContext(MovieContext);
+
+  const { setAlert } = alertContext;
+  const { returnStatus, renewStatus, error, clearErrors } = movieContext;
 
   const [rentInfo, setrentInfo] = useState({
     rentList: null,
@@ -34,8 +37,24 @@ const MyOrders = () => {
     getMovies();
   }, []);
 
+  useEffect(() => {
+    if (error) {
+      setAlert(error, "error");
+      console.log(error);
+      clearErrors();
+    }
+    if (returnStatus) {
+      setAlert(returnStatus, "success");
+      clearErrors();
+    }
+    if (renewStatus) {
+      setAlert(renewStatus, "success");
+      clearErrors();
+    }
+  }, [error, renewStatus, returnStatus]);
+
   return (
-    <div style={{ padding: "25px 30px" }}>
+    <div style={{ padding: "25px 30px", width: "100%", margin: "0 auto" }}>
       {movies !== null && !loading ? (
         <div>
           <div>

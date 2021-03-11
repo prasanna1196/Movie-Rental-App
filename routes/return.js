@@ -9,9 +9,27 @@ const Rent = require("../models/Rent");
 const ReturnMovie = require("../models/ReturnMovie");
 
 // Return a movie
-router.patch("/:id", auth, async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   try {
     const order = await Rent.findById(req.params.id);
+    const user = await User.findById(req.user);
+    const returnFiled = await ReturnMovie.findOne({ orderID: req.params.id });
+
+    if (returnFiled) {
+      return res.status(400).json({
+        msg: "Already filed for return, Waiting for Admin approval..",
+      });
+    }
+
+    if (order.penalty) {
+      if (order.penalty > user.credits) {
+        return res.status(400).json({ msg: "Not enough balance in wallet." });
+      }
+
+      // Deduct penalty money
+      user.credits -= order.penalty;
+      await user.save();
+    }
 
     // Create a new "applied for return" entry
     const returnMovie = new ReturnMovie({
@@ -19,7 +37,7 @@ router.patch("/:id", auth, async (req, res) => {
     });
     await returnMovie.save();
 
-    res.status(200).send("Return process initiated");
+    res.status(200).json({ msg: "Return process initiated" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -27,10 +45,28 @@ router.patch("/:id", auth, async (req, res) => {
 });
 
 // Extend due date
-router.patch("/renew/:id", auth, async (req, res) => {
+router.get("/renew/:id", auth, async (req, res) => {
   try {
     const order = await Rent.findById(req.params.id);
     const user = await User.findById(req.user);
+
+    // Check if DueDate was extended once
+    let difference =
+      (new Date(order.dueDate.toLocaleDateString()) -
+        new Date(order.rentedOn.toLocaleDateString())) /
+      (1000 * 60 * 60 * 24);
+
+    // console.log(new Date(order.dueDate.toLocaleDateString()));
+    // console.log(new Date(order.rentedOn.toLocaleDateString()));
+    // console.log(difference);
+
+    if (difference > 40) {
+      return res
+        .status(400)
+        .json({ msg: "Due date cannot be extended more than once" });
+    }
+
+    let renewDate = new Date();
 
     // Check for penalty
     if (order.penalty) {
@@ -41,20 +77,33 @@ router.patch("/renew/:id", auth, async (req, res) => {
       // Deduct penalty money
       user.credits -= order.penalty;
       await user.save();
+
+      // Set new due date (10 days added to current date)
+      renewDate.setDate(renewDate.getDate() + 10);
+
+      order.dueDate = renewDate;
+      await order.save();
+
+      res.status(200).json({
+        msg: `Renew date extended till ${renewDate.toLocaleDateString()}`,
+      });
+    } else {
+      // If no penalty, extend due date by 10 days
+
+      order.dueDate.setDate(order.dueDate.getDate() + 10);
+      console.log(order.dueDate);
+
+      order.dueDate = order.dueDate;
+      // Debit money for renewal and extend due date
+      user.credits -= order.amount;
+      await user.save();
+
+      await order.save();
+
+      res.status(200).json({
+        msg: `Renew date extended till ${renewDate.toLocaleDateString()}`,
+      });
     }
-
-    // Set new due date
-    let renewDate = new Date();
-    renewDate.setDate(renewDate.getDate() + 15);
-
-    // Debit money for renewal and extend due date
-    user.credits -= order.amount;
-    await user.save();
-
-    order.dueDate = renewDate;
-    await order.save();
-
-    res.status(200).send(order);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -63,7 +112,7 @@ router.patch("/renew/:id", auth, async (req, res) => {
 
 // Get the list of movies filed for return
 // Admin only access
-router.get("/approve", adminAuth, async (req, res) => {
+router.get("/approve/all", auth, async (req, res) => {
   try {
     const approve = await ReturnMovie.find();
     res.status(200).json({ list: approve });

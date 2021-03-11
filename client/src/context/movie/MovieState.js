@@ -8,6 +8,8 @@ import {
   PLACE_ORDER,
   GET_RENTED_MOVIES,
   GET_ONE_RENTED_MOVIE,
+  RETURN_MOVIE,
+  RENEW_MOVIE,
   MOVIE_ERROR,
   CLEAR_ERRORS,
 } from "../types";
@@ -20,6 +22,8 @@ const MovieState = (props) => {
     rentedMovies: null,
     rentDetails: null,
     oneRentedMovie: null,
+    returnStatus: null,
+    renewStatus: null,
     error: null,
   };
 
@@ -129,7 +133,7 @@ const MovieState = (props) => {
     } catch (err) {
       dispatch({
         type: MOVIE_ERROR,
-        payload: err.response.msg,
+        payload: err.response.data.msg,
       });
     }
   };
@@ -139,6 +143,34 @@ const MovieState = (props) => {
     dispatch({
       type: MOVIE_ERROR,
     });
+  };
+
+  // Return a movie
+  const returnMovie = async (id) => {
+    try {
+      const res = await axios.get(`/api/return/${id}`);
+
+      dispatch({ type: RETURN_MOVIE, payload: res.data.msg });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
+  // Renew Due Date
+  const renewMovie = async (id) => {
+    try {
+      const res = await axios.get(`/api/return/renew/${id}`);
+
+      dispatch({ type: RENEW_MOVIE, payload: res.data.msg });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.data.msg,
+      });
+    }
   };
 
   // Clear errors
@@ -153,6 +185,8 @@ const MovieState = (props) => {
         rentedMovies: state.rentedMovies,
         rentDetails: state.rentDetails,
         oneRentedMovie: state.oneRentedMovie,
+        returnStatus: state.returnStatus,
+        renewStatus: state.renewStatus,
         error: state.error,
         getMovies,
         getOneMovieById,
@@ -161,6 +195,8 @@ const MovieState = (props) => {
         getRentedMovies,
         getOneRentedMovie,
         clearRentalDetails,
+        returnMovie,
+        renewMovie,
         clearErrors,
       }}
     >

@@ -1,9 +1,22 @@
 import { Button, Paper } from "@material-ui/core";
 import React, { useEffect, useContext } from "react";
+import MovieContext from "../../context/movie/movieContext";
 
 // Verdana, Geneva, Tahoma, sans-serif  Roboto, Helvetica, Arial, sans-serif
 
 const MyOrderItem = ({ rent, movie }) => {
+  const movieContext = useContext(MovieContext);
+
+  const { returnMovie, renewMovie } = movieContext;
+
+  const onRenew = async () => {
+    await renewMovie(rent._id);
+  };
+
+  const onReturn = async () => {
+    await returnMovie(rent._id);
+  };
+
   return (
     <div>
       <Paper
@@ -29,14 +42,34 @@ const MyOrderItem = ({ rent, movie }) => {
           style={{
             display: "flex",
             flexDirection: "column",
+            alignItems: "flex-end",
             justifyContent: "space-between",
           }}
         >
-          <h4>Penalty: {rent.penalty}</h4>
+          {rent.status && rent.penalty ? (
+            <h4 style={{ color: "red" }}>Penalty: {rent.penalty}</h4>
+          ) : (
+            <h4>Penalty: {rent.penalty}</h4>
+          )}
           {rent.status && (
-            <Button variant="contained" color="primary">
-              Return
-            </Button>
+            <div>
+              <Button
+                style={{ marginRight: "15px" }}
+                onClick={onRenew}
+                variant="contained"
+                color="primary"
+              >
+                Renew
+              </Button>
+              <Button
+                style={{ color: "#ADFF2F" }}
+                onClick={onReturn}
+                variant="contained"
+                color="primary"
+              >
+                Return
+              </Button>
+            </div>
           )}
         </div>
       </Paper>

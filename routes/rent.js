@@ -165,9 +165,19 @@ router.get("/check/penalty", auth, async (req, res) => {
   try {
     const rentals = await Rent.find({ user: req.user, status: true });
     for (let rental of rentals) {
-      console.log(rental.dueDate);
+      let difference =
+        (new Date(new Date().toLocaleDateString()) -
+          new Date(rental.dueDate.toLocaleDateString())) /
+        (1000 * 60 * 60 * 24);
+
+      if (difference > 1) {
+        penalty = Math.floor(difference * rental.amount * 0.05);
+        console.log(penalty);
+        rental.penalty = penalty;
+        await rental.save();
+      }
     }
-    res.status(200).json(rentals);
+    res.status(200).json({ msg: "Info updated" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

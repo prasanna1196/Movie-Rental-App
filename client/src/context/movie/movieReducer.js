@@ -4,6 +4,8 @@ import {
   PLACE_ORDER,
   GET_RENTED_MOVIES,
   GET_ONE_RENTED_MOVIE,
+  RETURN_MOVIE,
+  RENEW_MOVIE,
   MOVIE_ERROR,
   CLEAR_ERRORS,
 } from "../types";
@@ -40,6 +42,18 @@ export default (state, action) => {
         oneRentedMovie: action.payload,
         loading: false,
       };
+    case RETURN_MOVIE:
+      return {
+        ...state,
+        returnStatus: action.payload,
+        loading: false,
+      };
+    case RENEW_MOVIE:
+      return {
+        ...state,
+        renewStatus: action.payload,
+        loading: false,
+      };
     case MOVIE_ERROR:
       return {
         ...state,
@@ -49,6 +63,8 @@ export default (state, action) => {
     case CLEAR_ERRORS:
       return {
         ...state,
+        returnStatus: null,
+        renewStatus: null,
         error: null,
       };
     default:
