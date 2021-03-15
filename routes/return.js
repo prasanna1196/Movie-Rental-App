@@ -56,10 +56,6 @@ router.get("/renew/:id", auth, async (req, res) => {
         new Date(order.rentedOn.toLocaleDateString())) /
       (1000 * 60 * 60 * 24);
 
-    // console.log(new Date(order.dueDate.toLocaleDateString()));
-    // console.log(new Date(order.rentedOn.toLocaleDateString()));
-    // console.log(difference);
-
     if (difference > 40) {
       return res
         .status(400)
@@ -79,7 +75,7 @@ router.get("/renew/:id", auth, async (req, res) => {
       await user.save();
 
       // Set new due date (10 days added to current date)
-      renewDate.setDate(renewDate.getDate() + 10);
+      renewDate.setTime(new Date().getTime() + 10 * 24 * 60 * 60 * 1000);
 
       order.dueDate = renewDate;
       await order.save();
@@ -90,15 +86,15 @@ router.get("/renew/:id", auth, async (req, res) => {
     } else {
       // If no penalty, extend due date by 10 days
 
-      order.dueDate.setDate(order.dueDate.getDate() + 10);
-      console.log(order.dueDate);
+      renewDate.setTime(order.dueDate.getTime() + 10 * 24 * 60 * 60 * 1000);
 
-      order.dueDate = order.dueDate;
+      order.dueDate = renewDate;
+
+      await order.save();
+
       // Debit money for renewal and extend due date
       user.credits -= order.amount;
       await user.save();
-
-      await order.save();
 
       res.status(200).json({
         msg: `Renew date extended till ${renewDate.toLocaleDateString()}`,

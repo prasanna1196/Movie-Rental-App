@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import {
   AppBar,
   Badge,
-  Drawer,
   Grid,
   IconButton,
   InputBase,
@@ -12,17 +11,11 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import {
-  ChatBubbleOutline,
-  Close,
-  Menu,
-  MonetizationOn,
-  Search,
-} from "@material-ui/icons";
+import { ChatBubbleOutline, Close, Menu, Search } from "@material-ui/icons";
 
+import SideMenu from "./SideMenu";
 import Payments from "./Payments";
 import AuthContext from "../../context/auth/authContext";
-import setAuthToken from "../../context/setAuthToken";
 
 const useStyles = makeStyles({
   root: {
@@ -61,6 +54,10 @@ const Navbar = () => {
 
   const onLogout = () => {
     logout();
+  };
+
+  const handleDrawer = () => {
+    setOpen(!open);
   };
 
   const authLinks = (
@@ -105,21 +102,16 @@ const Navbar = () => {
         <Toolbar>
           <Grid container alignItems="center">
             <Grid item style={{ marginRight: "10px" }}>
-              <IconButton onClick={() => setOpen(true)}>
+              <IconButton onClick={handleDrawer}>
                 <Menu style={{ color: "#ADFF2F" }} />
               </IconButton>
             </Grid>
             <Grid item>
-              <Typography
-                variant="h4"
-                color="secondary"
-                // style={{
-                //   fontFamily: "'Graphik', Helvetica, Arial, sans-serif",
-                //   color: "#ADFF2F",
-                // }}
-              >
-                Nutflix
-              </Typography>
+              <Link to="/" style={{ color: "#ADFF2F", textDecoration: "none" }}>
+                <Typography variant="h4" color="secondary">
+                  Nutflix
+                </Typography>
+              </Link>
             </Grid>
             {/* <Grid item xs></Grid> */}
 
@@ -137,27 +129,7 @@ const Navbar = () => {
           </Grid>
         </Toolbar>
       </AppBar>
-      <Drawer
-        open={open}
-        width={300}
-        style={{ marginTop: "40px" }}
-        onClose={() => setOpen(false)}
-      >
-        <MenuItem>
-          <IconButton onClick={() => setOpen(false)}>
-            <Close />
-          </IconButton>
-        </MenuItem>
-        <MenuItem>Really Long Menu Item</MenuItem>
-        <MenuItem>
-          <Link
-            to="/myOrders"
-            style={{ color: "#0F495C", textDecoration: "none" }}
-          >
-            My Orders
-          </Link>
-        </MenuItem>
-      </Drawer>
+      <SideMenu handleDrawer={handleDrawer} open={open} />
     </Fragment>
   );
 };
