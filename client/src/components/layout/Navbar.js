@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   AppBar,
   Badge,
@@ -60,6 +60,11 @@ const Navbar = () => {
     setOpen(!open);
   };
 
+  const [searchValue, setSearchValue] = useState("");
+
+  // For using history outside <Switch> in <BrowserRouter>
+  let history = useHistory();
+
   const authLinks = (
     <Grid item>
       <Payments />
@@ -118,6 +123,14 @@ const Navbar = () => {
             <Grid item style={{ marginLeft: "auto", marginRight: "20px" }}>
               <InputBase
                 className={classes.searchInput}
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                onKeyUp={(e) => {
+                  if (e.key === "Enter") {
+                    history.push(`/search/${e.target.value}`);
+                    setSearchValue("");
+                  }
+                }}
                 style={{
                   border: "3px solid #ADFF2F",
                 }}

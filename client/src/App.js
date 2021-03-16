@@ -16,6 +16,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Movies from "./components/movies/Movies";
 import MovieDetails from "./components/movies/MovieDetails";
+import Search from "./components/movies/Search";
 import PlaceOrder from "./components/order/PlaceOrder";
 import OrderConfirmation from "./components/order/OrderConfirmation";
 import MyOrders from "./components/order/MyOrders";
@@ -91,6 +92,7 @@ const App = () => {
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/movies/:title" component={MovieDetails} />
+                  <Route exact path="/search/:title" component={Search} />
                   <Route exact path="/order/:title" component={PlaceOrder} />
                   <Route
                     exact

@@ -7,6 +7,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_LOADED,
+  ADMIN_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -19,6 +20,7 @@ const AuthState = (props) => {
   const initialState = {
     token: localStorage.getItem("token"),
     isAuthenticated: null,
+    isAdmin: false,
     loading: true,
     user: null,
     prevLocation: "/",
@@ -34,7 +36,11 @@ const AuthState = (props) => {
         setAuthToken(localStorage.token);
         const res = await axios.get("/api/auth");
 
-        dispatch({ type: USER_LOADED, payload: res.data });
+        if (res.role === "admin") {
+          dispatch({ type: ADMIN_LOADED, payload: res.data });
+        } else {
+          dispatch({ type: USER_LOADED, payload: res.data });
+        }
       }
     } catch (error) {
       dispatch({ type: AUTH_ERROR });
@@ -104,6 +110,7 @@ const AuthState = (props) => {
       value={{
         token: state.token,
         isAuthenticated: state.isAuthenticated,
+        isAdmin: state.isAdmin,
         loading: state.loading,
         user: state.user,
         prevLocation: state.prevLocation,

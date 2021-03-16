@@ -9,7 +9,7 @@ const Movie = require("../models/Movie");
 // Get the list of movies
 router.get("/", async (req, res) => {
   try {
-    const movies = await Movie.find().sort({ quantity: 1 });
+    const movies = await Movie.find().sort({ dvd: 1 });
     res.json(movies);
   } catch (err) {
     console.error(err.message);
@@ -58,8 +58,22 @@ router.get("/:id", async (req, res) => {
 router.get("/name/:title", async (req, res) => {
   try {
     const movie = await Movie.findOne({
-      name: req.params.title,
+      name: new RegExp(req.params.title, "i"),
     });
+    res.json(movie);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Search movies by name
+router.get("/search/:title", async (req, res) => {
+  try {
+    const movie = await Movie.find({
+      name: new RegExp(req.params.title, "i"),
+    });
+
     res.json(movie);
   } catch (err) {
     console.error(err.message);
