@@ -36,7 +36,7 @@ const AuthState = (props) => {
         setAuthToken(localStorage.token);
         const res = await axios.get("/api/auth");
 
-        if (res.role === "admin") {
+        if (res.data.role === "admin") {
           dispatch({ type: ADMIN_LOADED, payload: res.data });
         } else {
           dispatch({ type: USER_LOADED, payload: res.data });

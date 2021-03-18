@@ -18,6 +18,7 @@ app.use("/api/myAccount", require("./routes/myAccount"));
 app.use("/api/movies", require("./routes/movies"));
 app.use("/api/rent", require("./routes/rent"));
 app.use("/api/return", require("./routes/return"));
+app.use("/api/stats", require("./routes/stats"));
 
 const PORT = 5000;
 

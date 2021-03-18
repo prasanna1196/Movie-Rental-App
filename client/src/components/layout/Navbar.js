@@ -7,11 +7,10 @@ import {
   IconButton,
   InputBase,
   makeStyles,
-  MenuItem,
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import { ChatBubbleOutline, Close, Menu, Search } from "@material-ui/icons";
+import { Menu, NotificationsActiveOutlined, Search } from "@material-ui/icons";
 
 import SideMenu from "./SideMenu";
 import Payments from "./Payments";
@@ -45,9 +44,6 @@ const Navbar = () => {
 
   const { isAuthenticated, logout, loadUser, user } = authContext;
 
-  // Drawer open and close
-  const [open, setOpen] = useState(false);
-
   useEffect(() => {
     loadUser();
   }, []);
@@ -56,10 +52,14 @@ const Navbar = () => {
     logout();
   };
 
+  // Drawer open and close
+  const [open, setOpen] = useState(false);
+
   const handleDrawer = () => {
     setOpen(!open);
   };
 
+  // Search Movie
   const [searchValue, setSearchValue] = useState("");
 
   // For using history outside <Switch> in <BrowserRouter>
@@ -69,8 +69,8 @@ const Navbar = () => {
     <Grid item>
       <Payments />
       <IconButton>
-        <Badge badgeContent={4} color="primary">
-          <ChatBubbleOutline style={{ color: "#ADFF2F" }} />
+        <Badge badgeContent={4} style={{ color: "white" }}>
+          <NotificationsActiveOutlined style={{ color: "#ADFF2F" }} />
         </Badge>
       </IconButton>
       <IconButton onClick={onLogout}>
