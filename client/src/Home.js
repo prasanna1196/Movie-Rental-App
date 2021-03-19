@@ -7,9 +7,17 @@ import AuthContext from "./context/auth/authContext";
 const Home = () => {
   const authContext = useContext(AuthContext);
 
-  const { isAdmin, loading } = authContext;
+  const { isAdmin, loading, isAuthenticated } = authContext;
 
-  return <div>{isAdmin && !loading ? <AdminHome /> : <Movies />}</div>;
+  return (
+    <div>
+      {loading ? (
+        <div>loading...</div>
+      ) : (
+        <div>{isAdmin && !isAuthenticated ? <AdminHome /> : <Movies />}</div>
+      )}
+    </div>
+  );
 };
 
 export default Home;

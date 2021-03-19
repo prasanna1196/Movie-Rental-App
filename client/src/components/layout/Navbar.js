@@ -42,7 +42,7 @@ const Navbar = () => {
 
   const authContext = useContext(AuthContext);
 
-  const { isAuthenticated, logout, loadUser, user } = authContext;
+  const { isAuthenticated, isAdmin, logout, loadUser, user } = authContext;
 
   useEffect(() => {
     loadUser();
@@ -138,7 +138,7 @@ const Navbar = () => {
                 startAdornment={<Search fontSize="small" />}
               />
             </Grid>
-            {isAuthenticated ? authLinks : guestLinks}
+            {isAuthenticated || isAdmin ? authLinks : guestLinks}
           </Grid>
         </Toolbar>
       </AppBar>

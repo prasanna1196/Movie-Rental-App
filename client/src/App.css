@@ -6,6 +6,13 @@
   flex-direction: row;
 }
 
+.flex-row-sa {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
 .blah {
   justify-content: space-around;
 }
@@ -202,4 +209,17 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.total-stats {
+  margin: 30px 20px;
+}
+
+.total-stats-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 4px;
 }

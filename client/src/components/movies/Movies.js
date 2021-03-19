@@ -6,8 +6,6 @@ import MovieItem from "./MovieItem";
 const Movies = () => {
   const movieContext = useContext(MovieContext);
 
-  // const { movies, loading, getMovies } = movieContext;
-
   const [some, setSome] = useState({
     movies: null,
     loading: true,
@@ -30,11 +28,19 @@ const Movies = () => {
       tmdb = [...tmdb, apiData];
     }
 
-    setSome({ loading: false, movies: response.data, movieApi: tmdb });
+    if (isMounted) {
+      setSome({ loading: false, movies: response.data, movieApi: tmdb });
+    }
   };
 
+  let isMounted = true;
+
   useEffect(() => {
+    // if (isMounted) {
+    //   getMovies();
+    // }
     getMovies();
+    return () => (isMounted = false);
   }, []);
 
   return (

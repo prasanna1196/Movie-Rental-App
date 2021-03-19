@@ -24,7 +24,7 @@ export default (state, action) => {
     case ADMIN_LOADED:
       return {
         ...state,
-        isAuthenticated: true,
+        isAuthenticated: false,
         isAdmin: true,
         loading: false,
         user: action.payload,
@@ -49,6 +49,7 @@ export default (state, action) => {
         ...state,
         token: null,
         isAuthenticated: false,
+        isAdmin: false,
         loading: false,
         user: null,
         error: action.payload,

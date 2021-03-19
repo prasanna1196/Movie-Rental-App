@@ -9,7 +9,7 @@ const AdminHome = () => {
       <div className="dashboard-title">
         <h1>Admin Dashboard</h1>
       </div>
-      <div className="admin-dashboard">
+      <div className="total-stats">
         <TotalStats />
       </div>
 
