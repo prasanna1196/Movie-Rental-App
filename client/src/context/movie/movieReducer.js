@@ -1,11 +1,13 @@
 import {
   GET_MOVIES,
+  DELETE_MOVIE,
   GET_ONE_MOVIE,
   PLACE_ORDER,
   GET_RENTED_MOVIES,
   GET_ONE_RENTED_MOVIE,
   RETURN_MOVIE,
   RENEW_MOVIE,
+  SET_ONE_MOVIE,
   MOVIE_ERROR,
   CLEAR_ERRORS,
 } from "../types";
@@ -16,6 +18,12 @@ export default (state, action) => {
       return {
         ...state,
         movies: action.payload,
+        loading: false,
+      };
+    case DELETE_MOVIE:
+      return {
+        ...state,
+        movies: state.movies.filter((movie) => movie._id !== action.payload),
         loading: false,
       };
     case GET_ONE_MOVIE:
@@ -53,6 +61,11 @@ export default (state, action) => {
         ...state,
         renewStatus: action.payload,
         loading: false,
+      };
+    case SET_ONE_MOVIE:
+      return {
+        ...state,
+        oneMovie: action.payload,
       };
     case MOVIE_ERROR:
       return {

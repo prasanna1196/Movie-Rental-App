@@ -9,12 +9,11 @@ const NumberCounter = ({ value }) => {
         setNum(i);
       }, (i * 1000) / value);
     }
-    console.log(num);
   }, []);
 
   return (
     <div>
-      <h2>{num}</h2>
+      <h1>{num}</h1>
     </div>
   );
 };

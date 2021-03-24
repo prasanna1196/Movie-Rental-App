@@ -6,11 +6,20 @@
   flex-direction: row;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .flex-row-sa {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
+}
+
+.sb {
+  justify-content: space-between;
 }
 
 .blah {
@@ -20,6 +29,10 @@
 h1 {
   margin: 0;
 }
+
+/* h2 {
+  margin: 0;
+} */
 
 h3 {
   margin: 0;
@@ -154,10 +167,21 @@ p {
   margin: 25px 0;
 }
 
+.movie-credits-a {
+  margin: 0;
+}
+
 .credit-item {
   display: flex;
   flex-flow: row;
   margin: 15px 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.credit-item-a {
+  display: flex;
+  flex-flow: row;
+  margin: 10px 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -168,6 +192,10 @@ p {
 
 .movie-availability {
   margin-top: 30px;
+}
+
+.movie-availability-a {
+  margin-top: 5px;
 }
 
 .quality {
@@ -232,4 +260,9 @@ p {
   justify-content: space-between;
   align-items: flex-end;
   padding-left: 0;
+}
+
+.movie-list-item {
+  display: flex;
+  flex-direction: column;
 }

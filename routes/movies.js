@@ -41,6 +41,22 @@ router.post("/", adminAuth, async (req, res) => {
   }
 });
 
+// Delete Movie
+router.delete("/:id", adminAuth, async (req, res) => {
+  try {
+    let movie = await Movie.findById(req.params.id);
+
+    if (!movie) return res.status(404).json({ msg: "Movie not found" });
+
+    await movie.findByIdAndRemove(req.params.id);
+
+    res.json({ msg: "Movie removed" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // Get a single movie by _id
 router.get("/:id", async (req, res) => {
   try {

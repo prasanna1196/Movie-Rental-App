@@ -4,12 +4,14 @@ import MovieContext from "./movieContext";
 import movieReducer from "./movieReducer";
 import {
   GET_MOVIES,
+  DELETE_MOVIE,
   GET_ONE_MOVIE,
   PLACE_ORDER,
   GET_RENTED_MOVIES,
   GET_ONE_RENTED_MOVIE,
   RETURN_MOVIE,
   RENEW_MOVIE,
+  SET_ONE_MOVIE,
   MOVIE_ERROR,
   CLEAR_ERRORS,
 } from "../types";
@@ -36,6 +38,23 @@ const MovieState = (props) => {
 
       dispatch({
         type: GET_MOVIES,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  // Delete Movie
+  const DeleteMovie = async (id) => {
+    try {
+      const res = await axios.get("/api/movies");
+
+      dispatch({
+        type: DELETE_MOVIE,
         payload: res.data,
       });
     } catch (err) {
@@ -173,6 +192,11 @@ const MovieState = (props) => {
     }
   };
 
+  // Set one movie
+  const setOneMovie = (movie) => {
+    dispatch({ type: SET_ONE_MOVIE, payload: movie });
+  };
+
   // Clear errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
@@ -189,6 +213,7 @@ const MovieState = (props) => {
         renewStatus: state.renewStatus,
         error: state.error,
         getMovies,
+        DeleteMovie,
         getOneMovieById,
         getOneMovieByName,
         placeOrder,
@@ -197,6 +222,7 @@ const MovieState = (props) => {
         clearRentalDetails,
         returnMovie,
         renewMovie,
+        setOneMovie,
         clearErrors,
       }}
     >

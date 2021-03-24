@@ -14,12 +14,13 @@ import Alerts from "./components/layout/Alerts";
 import Home from "./Home";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-import Movies from "./components/movies/Movies";
+import AdminRoute from "./components/auth/AdminRoute";
 import MovieDetails from "./components/movies/MovieDetails";
 import Search from "./components/movies/Search";
 import PlaceOrder from "./components/order/PlaceOrder";
 import OrderConfirmation from "./components/order/OrderConfirmation";
 import MyOrders from "./components/order/MyOrders";
+import AddMovies from "./components/admin/movies/AddMovies";
 
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
@@ -44,6 +45,7 @@ const theme = createMuiTheme({
   // #0c111b (hotstar background)
   // #f0ffff (white shade)
   // #e5eaee (grey ish background)
+  // #f0f1f3 (another background)
   // #3e9fbf (Blue color for subtext and key)
 
   // Global changes
@@ -100,6 +102,11 @@ const App = () => {
                     component={OrderConfirmation}
                   />
                   <Route exact path="/myOrders" component={MyOrders} />
+                  <AdminRoute
+                    exact
+                    path="/admin/addMovies"
+                    component={AddMovies}
+                  />
                 </Switch>
               </Router>
             </div>

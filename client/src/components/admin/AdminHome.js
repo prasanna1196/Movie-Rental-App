@@ -1,7 +1,8 @@
 import { Button, Paper } from "@material-ui/core";
 import React from "react";
+import { Link } from "react-router-dom";
 
-import TotalStats from "./TotalStats";
+import TotalStats from "./stats/TotalStats";
 
 const AdminHome = () => {
   return (
@@ -19,7 +20,7 @@ const AdminHome = () => {
             <h2 style={{ marginLeft: "22%" }}>Approve Returns</h2>
             <p>Pending: 15</p>
             <Button style={{ backgroundColor: "#0F495C" }} color="secondary">
-              Approve
+              <Link to="/admin/addMovies">addMovies</Link>
             </Button>
           </Paper>
         </div>
