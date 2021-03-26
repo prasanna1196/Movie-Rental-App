@@ -14,12 +14,12 @@ import AuthContext from "../../context/auth/authContext";
 
 const useStyles = makeStyles((theme) => ({
   register: {
-    height: "100%",
     justifyContent: "center",
     display: "flex",
     alignItems: "center",
   },
   pageContent: {
+    marginTop: "4%",
     width: "350px",
     height: "510px",
     // display: "flex",

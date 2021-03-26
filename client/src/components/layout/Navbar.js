@@ -20,6 +20,7 @@ const useStyles = makeStyles({
   root: {
     backgroundColor: "#0F495C",
     marginRight: "0px",
+    width: "100vw",
   },
   searchInput: {
     // opacity: "0.6",
@@ -103,7 +104,7 @@ const Navbar = () => {
 
   return (
     <Fragment>
-      <AppBar position="static" className={classes.root}>
+      <AppBar position="fixed" className={classes.root}>
         <Toolbar>
           <Grid container alignItems="center">
             <Grid item style={{ marginRight: "10px" }}>

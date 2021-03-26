@@ -70,6 +70,7 @@ const useStyles = makeStyles({
     height: "100vh",
     display: "flex",
     flexFlow: "column",
+    position: "relative",
   },
 });
 
@@ -89,25 +90,31 @@ const App = () => {
               <Router>
                 <Navbar />
                 <Alerts />
-                <Switch>
-                  <Route exact path="/" component={Home} />
-                  <Route exact path="/login" component={Login} />
-                  <Route exact path="/register" component={Register} />
-                  <Route exact path="/movies/:title" component={MovieDetails} />
-                  <Route exact path="/search/:title" component={Search} />
-                  <Route exact path="/order/:title" component={PlaceOrder} />
-                  <Route
-                    exact
-                    path="/orderConfirmation/:id"
-                    component={OrderConfirmation}
-                  />
-                  <Route exact path="/myOrders" component={MyOrders} />
-                  <AdminRoute
-                    exact
-                    path="/admin/addMovies"
-                    component={AddMovies}
-                  />
-                </Switch>
+                <div style={{ marginTop: "64px", height: "100vw" }}>
+                  <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/register" component={Register} />
+                    <Route
+                      exact
+                      path="/movies/:title"
+                      component={MovieDetails}
+                    />
+                    <Route exact path="/search/:title" component={Search} />
+                    <Route exact path="/order/:title" component={PlaceOrder} />
+                    <Route
+                      exact
+                      path="/orderConfirmation/:id"
+                      component={OrderConfirmation}
+                    />
+                    <Route exact path="/myOrders" component={MyOrders} />
+                    <AdminRoute
+                      exact
+                      path="/admin/addMovies"
+                      component={AddMovies}
+                    />
+                  </Switch>
+                </div>
               </Router>
             </div>
           </MovieState>

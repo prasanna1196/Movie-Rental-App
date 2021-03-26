@@ -19,15 +19,12 @@ router.get("/", async (req, res) => {
 
 // Add new movies
 router.post("/", adminAuth, async (req, res) => {
-  const { name, year, language, director, starCast, dvd, fhd, uhd } = req.body;
+  const { name, language, dvd, fhd, uhd } = req.body;
 
   try {
     const newMovie = new Movie({
       name,
-      year,
       language,
-      director,
-      starCast,
       dvd,
       fhd,
       uhd,
@@ -48,7 +45,7 @@ router.delete("/:id", adminAuth, async (req, res) => {
 
     if (!movie) return res.status(404).json({ msg: "Movie not found" });
 
-    await movie.findByIdAndRemove(req.params.id);
+    await Movie.findByIdAndRemove(req.params.id);
 
     res.json({ msg: "Movie removed" });
   } catch (err) {

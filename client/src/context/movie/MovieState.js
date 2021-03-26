@@ -11,7 +11,7 @@ import {
   GET_ONE_RENTED_MOVIE,
   RETURN_MOVIE,
   RENEW_MOVIE,
-  SET_ONE_MOVIE,
+  SET_CURRENT,
   MOVIE_ERROR,
   CLEAR_ERRORS,
 } from "../types";
@@ -19,6 +19,7 @@ import {
 const MovieState = (props) => {
   const initialState = {
     loading: true,
+    current: null,
     movies: null,
     oneMovie: null,
     rentedMovies: null,
@@ -49,13 +50,14 @@ const MovieState = (props) => {
   };
 
   // Delete Movie
-  const DeleteMovie = async (id) => {
+  const deleteMovie = async (id) => {
     try {
-      const res = await axios.get("/api/movies");
+      console.log(id);
+      await axios.delete(`/api/movies/${id}`);
 
       dispatch({
         type: DELETE_MOVIE,
-        payload: res.data,
+        payload: id,
       });
     } catch (err) {
       dispatch({
@@ -193,8 +195,8 @@ const MovieState = (props) => {
   };
 
   // Set one movie
-  const setOneMovie = (movie) => {
-    dispatch({ type: SET_ONE_MOVIE, payload: movie });
+  const setCurrent = (movie) => {
+    dispatch({ type: SET_CURRENT, payload: movie });
   };
 
   // Clear errors
@@ -204,6 +206,7 @@ const MovieState = (props) => {
     <MovieContext.Provider
       value={{
         loading: state.loading,
+        current: state.current,
         movies: state.movies,
         oneMovie: state.oneMovie,
         rentedMovies: state.rentedMovies,
@@ -213,7 +216,7 @@ const MovieState = (props) => {
         renewStatus: state.renewStatus,
         error: state.error,
         getMovies,
-        DeleteMovie,
+        deleteMovie,
         getOneMovieById,
         getOneMovieByName,
         placeOrder,
@@ -222,7 +225,7 @@ const MovieState = (props) => {
         clearRentalDetails,
         returnMovie,
         renewMovie,
-        setOneMovie,
+        setCurrent,
         clearErrors,
       }}
     >

@@ -1,0 +1,27 @@
+const languages = [
+  "Arabic",
+  "Bengali",
+  "Chinese",
+  "Dutch",
+  "Eygiptian",
+  "English",
+  "French",
+  "German",
+  "Gujrati",
+  "Hindi",
+  "Iranian",
+  "Italian",
+  "Japanese",
+  "Kannada",
+  "Korean",
+  "Malayalam",
+  "Marathi",
+  "Polish",
+  "Punjabi",
+  "Russian",
+  "Spanish",
+  "Tamil",
+  "Telugu",
+];
+
+export default languages;

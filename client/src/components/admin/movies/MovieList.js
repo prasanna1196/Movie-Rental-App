@@ -12,11 +12,11 @@ const MovieList = () => {
   }, []);
 
   return (
-    <div style={{ width: "50%" }}>
+    <div style={{ width: "50%", position: "absolute", right: "40px" }}>
       {movies ? (
         <div>
           {movies.map((movie) => (
-            <MovieListItem movie={movie} />
+            <MovieListItem key={movie._id} movie={movie} />
           ))}
         </div>
       ) : (

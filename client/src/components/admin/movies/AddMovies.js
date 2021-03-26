@@ -11,6 +11,7 @@ const AddMovies = () => {
         flexDirection: "row",
         justifyContent: "space-between",
         padding: "30px",
+        position: "relative",
       }}
     >
       <MovieForm />

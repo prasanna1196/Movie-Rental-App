@@ -4,9 +4,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   IconButton,
-  Typography,
 } from "@material-ui/core";
 import { Delete, Edit } from "@material-ui/icons";
 import MovieContext from "../../../context/movie/movieContext";
@@ -14,7 +12,7 @@ import MovieContext from "../../../context/movie/movieContext";
 const MovieListItem = ({ movie }) => {
   const movieContext = useContext(MovieContext);
 
-  const { setOneMovie } = movieContext;
+  const { setCurrent, deleteMovie } = movieContext;
 
   const title = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -26,12 +24,14 @@ const MovieListItem = ({ movie }) => {
 
   const handleDelete = () => {
     handleClose();
+    console.log(movie._id);
+    deleteMovie(movie._id);
   };
 
   return (
     <div
       style={{
-        width: "100%",
+        maxWidth: "500px",
         backgroundColor: "white",
         marginBottom: "15px",
         paddingLeft: "15px",
@@ -43,7 +43,7 @@ const MovieListItem = ({ movie }) => {
           <IconButton onClick={() => setOpen(true)}>
             <Delete />
           </IconButton>
-          <IconButton onClick={() => setOneMovie(movie)}>
+          <IconButton onClick={() => setCurrent(movie)}>
             <Edit />
           </IconButton>
         </div>
@@ -86,10 +86,10 @@ const MovieListItem = ({ movie }) => {
           {`Are you sure want to delete ${movie.name} ?`}
         </DialogContent>
         <DialogActions>
-          <Button color="primary" onClick={handleDelete}>
+          <Button color="primary" onClick={handleClose}>
             CANCEL
           </Button>
-          <Button color="primary" onClick={handleClose}>
+          <Button color="primary" onClick={handleDelete}>
             DELETE
           </Button>
         </DialogActions>

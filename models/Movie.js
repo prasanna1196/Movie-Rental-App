@@ -24,11 +24,11 @@ const MovieSchema = mongoose.Schema({
   },
   year: {
     type: Number,
-    required: true,
+    required: false,
   },
   director: {
     type: String,
-    required: true,
+    required: false,
     min: 1,
     max: 100,
   },
@@ -40,7 +40,7 @@ const MovieSchema = mongoose.Schema({
   },
   starCast: {
     type: Array,
-    required: true,
+    required: false,
   },
   dvd: {
     type: Number,

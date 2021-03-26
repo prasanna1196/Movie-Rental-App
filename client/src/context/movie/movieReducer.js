@@ -7,7 +7,7 @@ import {
   GET_ONE_RENTED_MOVIE,
   RETURN_MOVIE,
   RENEW_MOVIE,
-  SET_ONE_MOVIE,
+  SET_CURRENT,
   MOVIE_ERROR,
   CLEAR_ERRORS,
 } from "../types";
@@ -62,10 +62,10 @@ export default (state, action) => {
         renewStatus: action.payload,
         loading: false,
       };
-    case SET_ONE_MOVIE:
+    case SET_CURRENT:
       return {
         ...state,
-        oneMovie: action.payload,
+        current: action.payload,
       };
     case MOVIE_ERROR:
       return {

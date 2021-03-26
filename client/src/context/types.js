@@ -1,5 +1,4 @@
 export const GET_MOVIES = "GET_MOVIES";
-export const SET_ONE_MOVIE = "SET_ONE_MOVIE";
 export const GET_ONE_MOVIE = "GET_ONE_MOVIE";
 export const PLACE_ORDER = "PLACE_ORDER";
 export const GET_RENTED_MOVIES = "GET_RENTED_MOVIES";

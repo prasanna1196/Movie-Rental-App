@@ -9,15 +9,7 @@ const Home = () => {
 
   const { isAdmin, loading, isAuthenticated } = authContext;
 
-  return (
-    <div>
-      {loading ? (
-        <div>loading...</div>
-      ) : (
-        <div>{isAdmin && !isAuthenticated ? <AdminHome /> : <Movies />}</div>
-      )}
-    </div>
-  );
+  return <div>{isAdmin ? <AdminHome /> : <Movies />}</div>;
 };
 
 export default Home;
