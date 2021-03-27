@@ -6,12 +6,14 @@ import AuthContext from "../../context/auth/authContext";
 
 import { Close } from "@material-ui/icons";
 
+const linkStyle = { color: "#0F495C", textDecoration: "none" };
+
 const SideMenu = (props) => {
   const { handleDrawer } = props;
 
   const authContext = useContext(AuthContext);
 
-  const { isAuthenticated, logout, loadUser, user } = authContext;
+  const { isAuthenticated, isAdmin } = authContext;
 
   return (
     <Drawer
@@ -28,19 +30,11 @@ const SideMenu = (props) => {
       <MenuItem>Really Long Menu Item</MenuItem>
       <MenuItem>
         {isAuthenticated ? (
-          <Link
-            to="/myOrders"
-            style={{ color: "#0F495C", textDecoration: "none" }}
-            onClick={handleDrawer}
-          >
+          <Link to="/myOrders" style={linkStyle} onClick={handleDrawer}>
             My Orders
           </Link>
         ) : (
-          <Link
-            to="/login"
-            style={{ color: "#0F495C", textDecoration: "none" }}
-            onClick={handleDrawer}
-          >
+          <Link to="/login" style={linkStyle} onClick={handleDrawer}>
             My Orders
           </Link>
         )}

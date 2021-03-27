@@ -18,19 +18,24 @@ import {
 
 import languages from "./languages";
 import MovieContext from "../../../context/movie/movieContext";
+import AlertContext from "../../../context/alert/alertContext";
 
 const MovieForm = () => {
   const movieContext = useContext(MovieContext);
+  const alertContext = useContext(AlertContext);
 
-  const { current, loading, error, clearErrors } = movieContext;
+  const { current, clearCurrent, addMovie, updateMovie } = movieContext;
+  const { setAlert } = alertContext;
 
-  const [movie, setMovie] = useState({
+  const initialState = {
     name: "",
     language: "",
     dvd: 10,
     fhd: 10,
     uhd: 10,
-  });
+  };
+
+  const [movie, setMovie] = useState(initialState);
 
   let { name, language, dvd, fhd, uhd } = movie;
 
@@ -43,28 +48,42 @@ const MovieForm = () => {
         fhd: current.fhd,
         uhd: current.uhd,
       });
+    } else {
+      setMovie(initialState);
     }
   }, [current]);
 
-  const [open, setOpen] = useState(false);
-  const anchorEl = document.querySelector(".language");
-
-  const handleMenu = () => setOpen(!open);
-
   const handleInput = (e) => {
     setMovie({ ...movie, [e.target.name]: e.target.value });
-    console.log(movie);
   };
 
-  const title = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (!name) {
+      return setAlert("Movie Title is required", "warning");
+    }
+    if (!language) {
+      return setAlert("Select a Language", "warning");
+    }
+    if (isNaN(dvd) || isNaN(fhd) || isNaN(uhd)) {
+      return setAlert("Disc quantity should be a Number", "warning");
+    }
+    if (!current) {
+      addMovie(movie);
+    } else {
+      updateMovie(movie, current._id);
+    }
   };
 
   return (
-    <div>
-      <form style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ position: "fixed" }}>
+      <form
+        onSubmit={onSubmit}
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         <h2>{current ? "Edit Movie" : "Add Movie"}</h2>
         <TextField
+          style={{ marginBottom: "5px" }}
           variant="outlined"
           placeholder="Movie Name"
           onChange={handleInput}
@@ -92,7 +111,7 @@ const MovieForm = () => {
           </Select>
         </FormControl>
         <div
-          style={{ display: "flex", flexDirection: "row", margin: "20px 0" }}
+          style={{ display: "flex", flexDirection: "row", margin: "25px 0 " }}
         >
           <div>
             <TextField
@@ -113,7 +132,7 @@ const MovieForm = () => {
               <ExpandLessOutlined />
             </IconButton>
             <IconButton
-              onClick={() => setMovie({ ...movie, dvd: dvd - 1 })}
+              onClick={() => dvd > 0 && setMovie({ ...movie, dvd: dvd - 1 })}
               size="small"
             >
               <ExpandMore />
@@ -125,7 +144,7 @@ const MovieForm = () => {
               variant="filled"
               placeholder="FHD"
               onChange={handleInput}
-              name="dvd"
+              name="fhd"
               label="FHD"
               value={fhd}
             />
@@ -138,7 +157,7 @@ const MovieForm = () => {
               <ExpandLessOutlined />
             </IconButton>
             <IconButton
-              onClick={() => setMovie({ ...movie, fhd: fhd - 1 })}
+              onClick={() => fhd > 0 && setMovie({ ...movie, fhd: fhd - 1 })}
               size="small"
             >
               <ExpandMore />
@@ -163,7 +182,7 @@ const MovieForm = () => {
               <ExpandLessOutlined />
             </IconButton>
             <IconButton
-              onClick={() => setMovie({ ...movie, uhd: uhd - 1 })}
+              onClick={() => uhd > 0 && setMovie({ ...movie, uhd: uhd - 1 })}
               size="small"
             >
               <ExpandMore />
@@ -181,7 +200,11 @@ const MovieForm = () => {
         >
           {current ? "Edit Movie" : "Add Movie"}
         </Button>
-        {current && <Button variant="contained">Clear</Button>}
+        {current && (
+          <Button onClick={clearCurrent} variant="contained">
+            Clear
+          </Button>
+        )}
       </form>
     </div>
   );

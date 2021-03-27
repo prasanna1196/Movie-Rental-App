@@ -38,6 +38,35 @@ router.post("/", adminAuth, async (req, res) => {
   }
 });
 
+// Update Movie
+router.patch("/:id", adminAuth, async (req, res) => {
+  const { name, language, dvd, fhd, uhd } = req.body;
+
+  const movieFields = {};
+  if (name) movieFields.name = name;
+  if (language) movieFields.language = language;
+  if (dvd) movieFields.dvd = dvd;
+  if (fhd) movieFields.fhd = fhd;
+  if (uhd) movieFields.uhd = uhd;
+
+  try {
+    let movie = await Movie.findById(req.params.id);
+
+    if (!movie) return res.status(404).json({ msg: "Movie not found" });
+
+    movie = await Movie.findByIdAndUpdate(
+      req.params.id,
+      { $set: movieFields },
+      { new: true }
+    );
+
+    res.json(movie);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // Delete Movie
 router.delete("/:id", adminAuth, async (req, res) => {
   try {

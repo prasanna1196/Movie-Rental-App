@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import {
   Button,
   Dialog,
@@ -35,6 +36,7 @@ const MovieListItem = ({ movie }) => {
         backgroundColor: "white",
         marginBottom: "15px",
         paddingLeft: "15px",
+        paddingBottom: "15px",
       }}
     >
       <div className="flex-row sb">
@@ -49,18 +51,26 @@ const MovieListItem = ({ movie }) => {
         </div>
       </div>
       <div className="movie-credits-a flex-row-sa">
-        <div>
-          <div className="credit-item-a">
+        <div className="flex-column sb">
+          {/* <div className="credit-item-a">
             <p className="key">Director: </p>
             <p>{title(movie.director)}</p>
-          </div>
+          </div> */}
           <div className="credit-item-a">
             <p className="key">Language: </p>
             <p>{title(movie.language)}</p>
           </div>
-          <div className="credit-item-a">
+          {/* <div className="credit-item-a">
             <p className="key">Starcast: </p>
             <p>{title(movie.starCast[0])}</p>
+          </div> */}
+          <div>
+            <Link
+              style={{ textDecoration: "none", color: "#0F495C" }}
+              to={`/movies/${movie.name}`}
+            >
+              <h3>Details...</h3>
+            </Link>
           </div>
         </div>
         <div className="movie-availability-a">

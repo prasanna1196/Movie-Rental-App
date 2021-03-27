@@ -9,7 +9,7 @@ const MovieList = () => {
 
   useEffect(() => {
     getMovies();
-  }, []);
+  }, [movies]);
 
   return (
     <div style={{ width: "50%", position: "absolute", right: "40px" }}>

@@ -1,5 +1,7 @@
 import {
   GET_MOVIES,
+  ADD_MOVIE,
+  UPDATE_MOVIE,
   DELETE_MOVIE,
   GET_ONE_MOVIE,
   PLACE_ORDER,
@@ -8,6 +10,7 @@ import {
   RETURN_MOVIE,
   RENEW_MOVIE,
   SET_CURRENT,
+  CLEAR_CURRENT,
   MOVIE_ERROR,
   CLEAR_ERRORS,
 } from "../types";
@@ -20,10 +23,25 @@ export default (state, action) => {
         movies: action.payload,
         loading: false,
       };
+    case ADD_MOVIE:
+      return {
+        ...state,
+        movies: [action.payload, ...state.movies],
+        loading: false,
+      };
+    case UPDATE_MOVIE:
+      return {
+        ...state,
+        movies: state.movies.map((movie) =>
+          movie._id === action.payload._id ? action.payload : movie
+        ),
+        loading: false,
+      };
     case DELETE_MOVIE:
       return {
         ...state,
         movies: state.movies.filter((movie) => movie._id !== action.payload),
+
         loading: false,
       };
     case GET_ONE_MOVIE:
@@ -66,6 +84,11 @@ export default (state, action) => {
       return {
         ...state,
         current: action.payload,
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null,
       };
     case MOVIE_ERROR:
       return {

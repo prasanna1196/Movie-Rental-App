@@ -4,6 +4,8 @@ import MovieContext from "./movieContext";
 import movieReducer from "./movieReducer";
 import {
   GET_MOVIES,
+  ADD_MOVIE,
+  UPDATE_MOVIE,
   DELETE_MOVIE,
   GET_ONE_MOVIE,
   PLACE_ORDER,
@@ -12,6 +14,7 @@ import {
   RETURN_MOVIE,
   RENEW_MOVIE,
   SET_CURRENT,
+  CLEAR_CURRENT,
   MOVIE_ERROR,
   CLEAR_ERRORS,
 } from "../types";
@@ -41,6 +44,49 @@ const MovieState = (props) => {
         type: GET_MOVIES,
         payload: res.data,
       });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  // Add Movie
+  const addMovie = async (movie) => {
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+    try {
+      const res = await axios.post("/api/movies", movie, config);
+
+      dispatch({
+        type: ADD_MOVIE,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  //Update Movie
+  const updateMovie = async (movie, id) => {
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+    try {
+      const res = await axios.patch(`/api/movies/${id}`, movie, config);
+
+      dispatch({ type: UPDATE_MOVIE, payload: res.data });
+
+      clearCurrent();
     } catch (err) {
       dispatch({
         type: MOVIE_ERROR,
@@ -194,9 +240,14 @@ const MovieState = (props) => {
     }
   };
 
-  // Set one movie
+  // Set current movie
   const setCurrent = (movie) => {
     dispatch({ type: SET_CURRENT, payload: movie });
+  };
+
+  // Set current movie
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
   };
 
   // Clear errors
@@ -216,6 +267,8 @@ const MovieState = (props) => {
         renewStatus: state.renewStatus,
         error: state.error,
         getMovies,
+        addMovie,
+        updateMovie,
         deleteMovie,
         getOneMovieById,
         getOneMovieByName,
@@ -226,6 +279,7 @@ const MovieState = (props) => {
         returnMovie,
         renewMovie,
         setCurrent,
+        clearCurrent,
         clearErrors,
       }}
     >

@@ -3,6 +3,7 @@ import recharts from "recharts";
 import axios from "axios";
 
 import NumberCounter from "./NumberCounter";
+import { Group, Movie, ShoppingCart } from "@material-ui/icons";
 
 const TotalStats = () => {
   let isMounted = true;
@@ -41,9 +42,21 @@ const TotalStats = () => {
         <div className="flex-row-sa">
           <div className="total-stats-item">
             <div>
-              <i className="circular inverted blue users huge icon"></i>
+              {/* <i className="circular inverted blue users huge icon"></i> */}
+              <div
+                style={{
+                  borderRadius: "100px",
+                  backgroundColor: "#2185d0",
+                  width: "100px",
+                  height: "100px",
+                  padding: "15px",
+                  marginRight: "10px",
+                  color: "white",
+                }}
+              >
+                <Group style={{ width: "auto", height: "70px" }} />
+              </div>
             </div>
-
             <div className="total-stats-item-data">
               <h2>Users</h2>
               <NumberCounter value={users} />
@@ -51,7 +64,21 @@ const TotalStats = () => {
           </div>
           <div className="total-stats-item">
             <div>
-              <i className="circular inverted orange film huge icon"></i>
+              {/* <i className="circular inverted orange film huge icon"></i> */}
+              <div
+                style={{
+                  borderRadius: "100px",
+                  backgroundColor: "#f2711c",
+                  width: "100px",
+                  height: "100px",
+                  padding: "15px",
+                  marginRight: "10px",
+                  color: "white",
+                  transform: "scaleX(-1)",
+                }}
+              >
+                <Movie style={{ width: "auto", height: "70px" }} />
+              </div>
             </div>
 
             <div className="total-stats-item-data">
@@ -61,7 +88,20 @@ const TotalStats = () => {
           </div>
           <div className="total-stats-item">
             <div>
-              <i className="circular inverted green  shopping cart huge icon"></i>
+              {/* <i className="circular inverted green  shopping cart huge icon"></i> */}
+              <div
+                style={{
+                  borderRadius: "100px",
+                  backgroundColor: "#21ba45",
+                  width: "100px",
+                  height: "100px",
+                  padding: "18px",
+                  marginRight: "10px",
+                  color: "white",
+                }}
+              >
+                <ShoppingCart style={{ width: "auto", height: "70px" }} />
+              </div>
             </div>
 
             <div className="total-stats-item-data">
