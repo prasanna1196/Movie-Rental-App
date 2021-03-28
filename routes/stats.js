@@ -39,4 +39,19 @@ router.get("/rentals", auth, async (req, res) => {
   }
 });
 
+router.get("/graph", auth, async (req, res) => {
+  try {
+    const rentals = await Rent.find();
+    let data = [];
+    let count = 0;
+    let dataItem = {};
+    rentals.map((rental) => {
+      dataItem.date = rental.rentedOn.slice(0, 10);
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
