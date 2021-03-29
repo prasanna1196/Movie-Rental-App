@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
+const { DateTime } = require("luxon");
 
 const Movie = require("../models/Movie");
 const User = require("../models/User");
 const Rent = require("../models/Rent");
+
+const graphArray = require("../middleware/AdminGraphStats");
 
 // Get total number of users
 router.get("/users", auth, async (req, res) => {
@@ -42,12 +45,10 @@ router.get("/rentals", auth, async (req, res) => {
 router.get("/graph", auth, async (req, res) => {
   try {
     const rentals = await Rent.find();
-    let data = [];
-    let count = 0;
-    let dataItem = {};
-    rentals.map((rental) => {
-      dataItem.date = rental.rentedOn.slice(0, 10);
-    });
+
+    const result = graphArray(rentals);
+
+    res.json(result);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
