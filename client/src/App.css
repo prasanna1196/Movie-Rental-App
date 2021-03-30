@@ -18,8 +18,15 @@
   flex-wrap: wrap;
 }
 
+.sa {
+  justify-content: space-around;
+}
 .sb {
   justify-content: space-between;
+}
+
+.ace {
+  align-items: center;
 }
 
 .blah {
@@ -237,6 +244,7 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .total-stats {
@@ -251,6 +259,7 @@ p {
   padding: 20px;
   margin: 0 5px 10px;
   background-color: #fff;
+
   border-radius: 4px;
   width: 30%;
   min-width: 140px;

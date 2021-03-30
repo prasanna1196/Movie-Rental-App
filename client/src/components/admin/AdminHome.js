@@ -1,7 +1,8 @@
-import { Button, Paper } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { DateTime } from "luxon";
+import { Button, Paper, IconButton } from "@material-ui/core";
 import {
   LineChart,
   Line,
@@ -11,15 +12,17 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Bar,
+  BarChart,
 } from "recharts";
 
 import TotalStats from "./stats/TotalStats";
+import { Add } from "@material-ui/icons";
 
 const AdminHome = () => {
   const [graphData, setGraphData] = useState(null);
   const getData = async () => {
     const res = await axios.get("/api/stats/graph");
-    console.log(res.data);
 
     setGraphData(res.data);
   };
@@ -38,21 +41,26 @@ const AdminHome = () => {
       </div>
 
       <div className="admin-dashboard">
-        <div style={{ width: "25%" }}>
-          <Paper>
-            <h2 style={{ marginLeft: "22%" }}>Approve Returns</h2>
-            <p>Pending: 15</p>
-            <Button style={{ backgroundColor: "#0F495C" }} color="secondary">
-              <Link to="/admin/addMovies">addMovies</Link>
-            </Button>
-          </Paper>
-        </div>
         {graphData && (
-          <div style={{ width: "50%", backgroundColor: "white" }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                width={500}
-                height={300}
+          <Paper
+            style={{
+              minWidth: "400px",
+              width: "50%",
+              backgroundColor: "white",
+              padding: "0 0 20px",
+            }}
+          >
+            <div className="flex-row sb">
+              <h1 style={{ margin: "10px 20px" }}>Rentals</h1>
+              <div>
+                <p style={{ margin: "10px 20px" }}>
+                  {`${DateTime.now().monthLong} ${DateTime.now().year}`}
+                </p>
+                <p style={{ margin: "10px 20px" }}>Total: 7</p>
+              </div>
+            </div>
+            <ResponsiveContainer width={"90%"} height={300}>
+              <BarChart
                 data={graphData}
                 margin={{
                   top: 5,
@@ -66,13 +74,51 @@ const AdminHome = () => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                {/* <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} /> */}
-                <Line type="monotone" dataKey="count" stroke="#82ca9d" />
-              </LineChart>
+
+                <Bar dataKey="count" fill="#8884d8" />
+              </BarChart>
             </ResponsiveContainer>
-          </div>
+          </Paper>
         )}
+        <div
+          className="flex-column sa"
+          style={{ width: "25%", padding: "30px, 0" }}
+        >
+          <Paper
+            className="flex-column sa ace"
+            style={{ minWidth: "200px", minHeight: "300px", padding: "20px" }}
+          >
+            <h1>Approve Returns</h1>
+            <h2>Pending: 15</h2>
+            <Button style={{ backgroundColor: "#0F495C", width: "70%" }}>
+              <Link
+                style={{ textDecoration: "none", color: "#ADFF2F" }}
+                to="/admin/addMovies"
+              >
+                APPROVE
+              </Link>
+            </Button>
+          </Paper>
+        </div>
       </div>
+
+      <IconButton
+        style={{
+          position: "fixed",
+          bottom: "30px",
+          right: "30px",
+          borderRadius: "100px",
+          backgroundColor: "teal",
+          width: "70px",
+          height: "70px",
+          marginRight: "10px",
+          boxShadow: "10px",
+        }}
+      >
+        <Link style={{ paddingTop: "5px" }} to="/admin/addMovies">
+          <Add style={{ width: "auto", height: "50px", color: "white" }}></Add>
+        </Link>
+      </IconButton>
     </div>
   );
 };

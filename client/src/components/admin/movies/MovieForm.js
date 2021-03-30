@@ -198,7 +198,7 @@ const MovieForm = () => {
           type="submit"
           variant="contained"
         >
-          {current ? "Edit Movie" : "Add Movie"}
+          {current ? "Update Movie" : "Add Movie"}
         </Button>
         {current && (
           <Button onClick={clearCurrent} variant="contained">

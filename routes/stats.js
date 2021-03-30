@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
-const { DateTime } = require("luxon");
 
 const Movie = require("../models/Movie");
 const User = require("../models/User");
