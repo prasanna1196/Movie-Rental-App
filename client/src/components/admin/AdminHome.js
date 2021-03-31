@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
 import { Button, Paper, IconButton } from "@material-ui/core";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -21,9 +19,14 @@ import { Add } from "@material-ui/icons";
 
 const AdminHome = () => {
   const [graphData, setGraphData] = useState(null);
+  const [pending, setPending] = useState(null);
+
   const getData = async () => {
     const res = await axios.get("/api/stats/graph");
 
+    const count = await axios.get("/api/stats/returns");
+
+    setPending(count.data);
     setGraphData(res.data);
   };
 
@@ -89,11 +92,11 @@ const AdminHome = () => {
             style={{ minWidth: "200px", minHeight: "300px", padding: "20px" }}
           >
             <h1>Approve Returns</h1>
-            <h2>Pending: 15</h2>
+            <h2>Pending: {pending}</h2>
             <Button style={{ backgroundColor: "#0F495C", width: "70%" }}>
               <Link
                 style={{ textDecoration: "none", color: "#ADFF2F" }}
-                to="/admin/addMovies"
+                to="/admin/approveReturns"
               >
                 APPROVE
               </Link>

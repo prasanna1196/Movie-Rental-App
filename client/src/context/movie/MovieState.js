@@ -13,6 +13,8 @@ import {
   GET_ONE_RENTED_MOVIE,
   RETURN_MOVIE,
   RENEW_MOVIE,
+  APPROVE_RETURN,
+  DECLINE_RETURN,
   SET_CURRENT,
   CLEAR_CURRENT,
   MOVIE_ERROR,
@@ -98,7 +100,6 @@ const MovieState = (props) => {
   // Delete Movie
   const deleteMovie = async (id) => {
     try {
-      console.log(id);
       await axios.delete(`/api/movies/${id}`);
 
       dispatch({
@@ -240,6 +241,61 @@ const MovieState = (props) => {
     }
   };
 
+  // Get movies filed for return
+  const getReturns = async () => {
+    try {
+      const res = await axios.get("/api/return/approve/all");
+      dispatch({
+        type: GET_MOVIES,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  //Approve return
+  const approveReturn = async (id) => {
+    try {
+      await axios.patch(`/api/return/approve/${id}`);
+
+      dispatch({
+        type: APPROVE_RETURN,
+        payload: id,
+      });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  //Decline Return
+  const declineReturn = async (info) => {
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+    try {
+      await axios.post(`/api/return/decline`, info, config);
+
+      dispatch({
+        type: DECLINE_RETURN,
+        payload: info.returnId,
+      });
+    } catch (err) {
+      dispatch({
+        type: MOVIE_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
   // Set current movie
   const setCurrent = (movie) => {
     dispatch({ type: SET_CURRENT, payload: movie });
@@ -278,6 +334,9 @@ const MovieState = (props) => {
         clearRentalDetails,
         returnMovie,
         renewMovie,
+        getReturns,
+        approveReturn,
+        declineReturn,
         setCurrent,
         clearCurrent,
         clearErrors,

@@ -4,17 +4,12 @@ import {
   FormControl,
   IconButton,
   InputLabel,
-  Menu,
   MenuItem,
   Select,
   TextField,
+  Typography,
 } from "@material-ui/core";
-import {
-  ArrowDownward,
-  ExpandLess,
-  ExpandLessOutlined,
-  ExpandMore,
-} from "@material-ui/icons";
+import { ExpandLessOutlined, ExpandMore } from "@material-ui/icons";
 
 import languages from "./languages";
 import MovieContext from "../../../context/movie/movieContext";
@@ -81,9 +76,11 @@ const MovieForm = () => {
         onSubmit={onSubmit}
         style={{ display: "flex", flexDirection: "column" }}
       >
-        <h2>{current ? "Edit Movie" : "Add Movie"}</h2>
+        <Typography variant="h3" color="primary">
+          {current ? "Edit Movie" : "Add Movie"}
+        </Typography>
         <TextField
-          style={{ marginBottom: "5px" }}
+          style={{ margin: "15px 0 5px" }}
           variant="outlined"
           placeholder="Movie Name"
           onChange={handleInput}

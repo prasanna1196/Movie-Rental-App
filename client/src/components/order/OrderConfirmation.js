@@ -15,15 +15,9 @@ const OrderConfirmation = ({ match }) => {
     oneMovie,
   } = movieContext;
 
-  const getOrderDetails = async () => {
-    await getOneRentedMovie(match.params.id);
-
-    await getOneMovieById(oneRentedMovie.movie);
-  };
-
   useEffect(() => {
     clearRentalDetails();
-    // getOrderDetails();
+
     getOneRentedMovie(match.params.id);
   }, []);
 

@@ -7,6 +7,7 @@ const Movie = require("../models/Movie");
 const User = require("../models/User");
 const Rent = require("../models/Rent");
 const ReturnMovie = require("../models/ReturnMovie");
+const Message = require("../models/Message");
 
 // Return a movie
 router.get("/:id", auth, async (req, res) => {
@@ -25,10 +26,10 @@ router.get("/:id", auth, async (req, res) => {
       if (order.penalty > user.credits) {
         return res.status(400).json({ msg: "Not enough balance in wallet." });
       }
-
-      // Deduct penalty money
       user.credits -= order.penalty;
+      order.penalty = 0;
       await user.save();
+      await order.save();
     }
 
     // Create a new "applied for return" entry
@@ -111,7 +112,7 @@ router.get("/renew/:id", auth, async (req, res) => {
 router.get("/approve/all", auth, async (req, res) => {
   try {
     const approve = await ReturnMovie.find();
-    res.status(200).json({ list: approve });
+    res.status(200).json(approve);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -130,16 +131,16 @@ router.patch("/approve/:id", adminAuth, async (req, res) => {
     // Check if it is filed for return
     if (!approve) return res.status(404).json({ msg: "No match found." });
 
-    // Check for penalty
-    if (order.penalty) {
-      if (order.penalty > user.credits) {
-        return res.json({ msg: "Not enough money in wallet." });
-      }
+    // // Check for penalty
+    // if (order.penalty) {
+    //   if (order.penalty > user.credits) {
+    //     return res.status(404).json({ msg: "Not enough money in wallet." });
+    //   }
 
-      // Deduct penalty money
-      user.credits -= order.penalty;
-      await user.save();
-    }
+    //   // Deduct penalty money
+    //   user.credits -= order.penalty;
+    //   await user.save();
+    // }
 
     // Update number of available discs
     if (order.quality === "uhd") {
@@ -160,7 +161,44 @@ router.patch("/approve/:id", adminAuth, async (req, res) => {
     // Delete entry from ReturnMovie database
     await ReturnMovie.findByIdAndDelete(req.params.id);
 
+    // Create new Message for user
+    const newMessage = new Message({
+      message: `"${movie.name}" return approved by Nutflix. Thank you.`,
+      user: order.user,
+    });
+
+    await newMessage.save();
+
     res.status(200).send("Returned successfully");
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Decline movie return
+router.post("/decline", adminAuth, async (req, res) => {
+  const { user, movie, reason, returnId } = req.body;
+  try {
+    const approve = await ReturnMovie.findById(returnId);
+
+    // Check if it is filed for return
+    if (!approve) return res.status(404).json({ msg: "No match found." });
+
+    // Delete entry from ReturnMovie database
+    await ReturnMovie.findByIdAndDelete(returnId);
+
+    // Create new Message for user
+    const newMessage = new Message({
+      message: `"${movie}" return declined, since "${reason}". Please contact support team.`,
+      user: user,
+    });
+
+    console.log(newMessage);
+
+    await newMessage.save();
+
+    res.status(200).send("Return Denied");
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

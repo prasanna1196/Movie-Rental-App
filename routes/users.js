@@ -6,7 +6,20 @@ const config = require("config");
 const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
+const adminAuth = require("../middleware/adminAuth");
 
+// Get one user
+router.get("/:id", adminAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Add user
 router.post(
   "/",
   [

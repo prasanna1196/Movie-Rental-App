@@ -9,6 +9,8 @@ import {
   GET_ONE_RENTED_MOVIE,
   RETURN_MOVIE,
   RENEW_MOVIE,
+  APPROVE_RETURN,
+  DECLINE_RETURN,
   SET_CURRENT,
   CLEAR_CURRENT,
   MOVIE_ERROR,
@@ -38,6 +40,8 @@ export default (state, action) => {
         loading: false,
       };
     case DELETE_MOVIE:
+    case APPROVE_RETURN:
+    case DECLINE_RETURN:
       return {
         ...state,
         movies: state.movies.filter((movie) => movie._id !== action.payload),

@@ -21,6 +21,7 @@ import PlaceOrder from "./components/order/PlaceOrder";
 import OrderConfirmation from "./components/order/OrderConfirmation";
 import MyOrders from "./components/order/MyOrders";
 import AddMovies from "./components/admin/movies/AddMovies";
+import ApproveReturns from "./components/admin/movies/ApproveReturns";
 
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
@@ -112,6 +113,11 @@ const App = () => {
                       exact
                       path="/admin/addMovies"
                       component={AddMovies}
+                    />
+                    <AdminRoute
+                      exact
+                      path="/admin/approveReturns"
+                      component={ApproveReturns}
                     />
                   </Switch>
                 </div>

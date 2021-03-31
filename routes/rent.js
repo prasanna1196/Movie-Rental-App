@@ -17,6 +17,17 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+// Get one rental by id
+router.get("/one/:id", auth, async (req, res) => {
+  try {
+    const rental = await Rent.findById(req.params.id);
+    res.status(200).json(rental);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // Get all the movies rented by a user
 router.get("/all", auth, async (req, res) => {
   try {
