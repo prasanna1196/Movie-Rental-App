@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 import React, { useEffect, useContext } from "react";
 
 import MovieContext from "../../context/movie/movieContext";
@@ -60,7 +60,9 @@ const OrderConfirmation = ({ match }) => {
           </div>
         </div>
       ) : (
-        <div>loading...</div>
+        <div className="flex-row sa">
+          <CircularProgress />
+        </div>
       )}
     </div>
   );

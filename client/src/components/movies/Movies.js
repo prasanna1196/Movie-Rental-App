@@ -1,18 +1,16 @@
 import React, { Fragment, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import MovieContext from "../../context/movie/movieContext";
+import RegionalMovies from "./RegionalMovies";
+import ForeignLanguageMovies from "./ForeignLanguageMovies";
 import MovieItem from "./MovieItem";
+import { CircularProgress } from "@material-ui/core";
 
 const Movies = () => {
-  const movieContext = useContext(MovieContext);
-
   const [some, setSome] = useState({
     movies: null,
     loading: true,
     movieApi: null,
   });
-
-  let baseURL = "https://image.tmdb.org/t/p/w500";
 
   const { movies, loading, movieApi } = some;
 
@@ -22,7 +20,7 @@ const Movies = () => {
     let tmdb = [];
     for (let res of response.data) {
       let api = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=82f3aa84f64fab6fc7f4286e28e9df24&query=${res.name}`
+        `http://www.omdbapi.com/?apikey=e96c9482&t=${res.name}`
       );
       let apiData = await api.json();
       tmdb = [...tmdb, apiData];
@@ -36,24 +34,29 @@ const Movies = () => {
   let isMounted = true;
 
   useEffect(() => {
-    // if (isMounted) {
-    //   getMovies();
-    // }
     getMovies();
     return () => (isMounted = false);
   }, []);
 
   return (
-    <div>
+    <div style={{ overflow: "hidden" }}>
+      <h1 style={{ margin: "15px 15px 0" }}>Movies</h1>
       {!loading && movies !== null && movieApi.length == movies.length ? (
-        <div className="movie-container">
-          {movieApi.map((movie, index) => (
-            <MovieItem key={movie.results[0].id} movie={movie.results[0]} />
-          ))}
+        <div>
+          <div className="movie-container">
+            {movieApi.map((movie, index) => (
+              <MovieItem key={movie.imdbID} movie={movie} />
+            ))}
+            <div style={{ minWidth: "8px" }}></div>
+          </div>
         </div>
       ) : (
-        <div>loading...</div>
+        <div className="flex-row sa">
+          <CircularProgress />
+        </div>
       )}
+      <RegionalMovies />
+      <ForeignLanguageMovies />
     </div>
   );
 };

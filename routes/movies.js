@@ -83,6 +83,55 @@ router.delete("/:id", adminAuth, async (req, res) => {
   }
 });
 
+// Get list of regional movies
+router.get("/regionalMovies", async (req, res) => {
+  try {
+    const movies = await Movie.find({
+      $or: [
+        { language: "Bengali" },
+        { language: "Gujrati" },
+        { language: "Kannada" },
+        { language: "Malayalam" },
+        { language: "Marathi" },
+        { language: "Punjabi" },
+        { language: "Tamil" },
+        { language: "Telugu" },
+      ],
+    });
+    res.json(movies);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Get list of Foreign language movies
+router.get("/foreignLanguageMovies", async (req, res) => {
+  try {
+    const movies = await Movie.find({
+      $or: [
+        { language: "Arabic" },
+        { language: "Chinese" },
+        { language: "Cantonese" },
+        { language: "French" },
+        { language: "German" },
+        { language: "Iranian" },
+        { language: "Italian" },
+        { language: "Japanese" },
+        { language: "Korean" },
+        { language: "Persian" },
+        { language: "Portugese" },
+        { language: "Russian" },
+        { language: "Spanish" },
+      ],
+    });
+    res.json(movies);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // Get a single movie by _id
 router.get("/:id", async (req, res) => {
   try {

@@ -12,6 +12,7 @@ import {
   FormControl,
   FormControlLabel,
   Checkbox,
+  CircularProgress,
 } from "@material-ui/core";
 
 const PlaceOrder = ({ match, history }) => {
@@ -289,7 +290,9 @@ const PlaceOrder = ({ match, history }) => {
           </div>
         </div>
       ) : (
-        <div>loading..</div>
+        <div className="flex-row sa">
+          <CircularProgress />
+        </div>
       )}
     </div>
   );

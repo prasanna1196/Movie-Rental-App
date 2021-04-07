@@ -11,6 +11,7 @@ import "./App.css";
 
 import Navbar from "./components/layout/Navbar";
 import Alerts from "./components/layout/Alerts";
+import Messages from "./components/layout/Messages";
 import Home from "./Home";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -109,6 +110,7 @@ const App = () => {
                       component={OrderConfirmation}
                     />
                     <Route exact path="/myOrders" component={MyOrders} />
+                    <Route exact path="/messages" component={Messages} />
                     <AdminRoute
                       exact
                       path="/admin/addMovies"

@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
@@ -157,7 +156,7 @@ const MovieDetails = ({ match, history }) => {
                 </div>
                 <div className="credit-item">
                   <p className="key">Rotten Tomatoes: </p>
-                  {details.Ratings[1].Value ? (
+                  {details.Ratings[1] ? (
                     <p>{details.Ratings[1].Value}</p>
                   ) : (
                     <p>N/A</p>
@@ -175,7 +174,9 @@ const MovieDetails = ({ match, history }) => {
             </div>
           </Fragment>
         ) : (
-          <div>clientLoading...</div>
+          <div className="flex-row sa">
+            <CircularProgress color="secondary" />
+          </div>
         ))
       }
     </div>

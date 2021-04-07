@@ -68,6 +68,8 @@ const MovieState = (props) => {
         type: ADD_MOVIE,
         payload: res.data,
       });
+
+      dispatch({ type: CLEAR_CURRENT });
     } catch (err) {
       dispatch({
         type: MOVIE_ERROR,

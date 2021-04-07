@@ -3,6 +3,7 @@ import axios from "axios";
 
 import ApproveReturnItem from "./ApproveReturnItem";
 import MovieContext from "../../../context/movie/movieContext";
+import { CircularProgress } from "@material-ui/core";
 
 const ApproveReturns = () => {
   const movieContext = useContext(MovieContext);
@@ -44,10 +45,17 @@ const ApproveReturns = () => {
   return (
     <div style={{ padding: "25px 30px", width: "100%", margin: "0 auto" }}>
       <h1>Approve Returns</h1>
-      {orders &&
-        orders.map((order) => (
-          <ApproveReturnItem key={order.returnId} order={order} />
-        ))}
+      {orders ? (
+        <div>
+          {orders.map((order) => (
+            <ApproveReturnItem key={order.returnId} order={order} />
+          ))}
+        </div>
+      ) : (
+        <div className="flex-row sa">
+          <CircularProgress />
+        </div>
+      )}
     </div>
   );
 };

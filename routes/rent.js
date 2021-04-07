@@ -162,7 +162,7 @@ router.post("/", auth, async (req, res) => {
     await user.save();
     await getMovie.save();
     const rental = await newRental.save();
-    console.log(rental);
+    // console.log(rental);
     res.json(rental);
   } catch (err) {
     console.error(err.message);

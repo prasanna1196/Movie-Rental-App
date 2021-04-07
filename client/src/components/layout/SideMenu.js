@@ -30,7 +30,7 @@ const SideMenu = (props) => {
       <MenuItem>Really Long Menu Item</MenuItem>
       <MenuItem>
         {isAuthenticated ? (
-          <Link to="/myOrders" style={linkStyle} onClick={handleDrawer}>
+          <Link to="/myOrders" style={linkStyle} onClick={() => handleDrawer()}>
             My Orders
           </Link>
         ) : (

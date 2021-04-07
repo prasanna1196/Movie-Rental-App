@@ -13,8 +13,10 @@ const Alerts = () => {
         variant="filled"
         severity={alert.type}
         style={{
-          margin: "80px auto 0px",
+          top: "80px",
+          left: "30%",
           width: "40%",
+          position: "fixed",
         }}
       >
         {alert.msg}

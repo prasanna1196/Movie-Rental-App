@@ -15,6 +15,7 @@ import { Menu, NotificationsActiveOutlined, Search } from "@material-ui/icons";
 import SideMenu from "./SideMenu";
 import Payments from "./Payments";
 import AuthContext from "../../context/auth/authContext";
+import axios from "axios";
 
 const useStyles = makeStyles({
   root: {
@@ -45,8 +46,16 @@ const Navbar = () => {
 
   const { isAuthenticated, isAdmin, logout, loadUser, user } = authContext;
 
+  const [messageCount, setMessageCount] = useState(0);
+
+  const getMessages = async () => {
+    const messageCount = await axios.get("/api/messages/count");
+    setMessageCount(messageCount.data);
+  };
+
   useEffect(() => {
     loadUser();
+    getMessages();
   }, []);
 
   const onLogout = () => {
@@ -63,16 +72,18 @@ const Navbar = () => {
   // Search Movie
   const [searchValue, setSearchValue] = useState("");
 
-  // For using history outside <Switch> in <BrowserRouter>
+  // For using history outside <Switch> in <BrowserRouter> in App.js file
   let history = useHistory();
 
   const authLinks = (
     <Grid item>
       <Payments />
       <IconButton>
-        <Badge badgeContent={4} style={{ color: "white" }}>
-          <NotificationsActiveOutlined style={{ color: "#ADFF2F" }} />
-        </Badge>
+        <Link to="/messages">
+          <Badge color="error" badgeContent={messageCount}>
+            <NotificationsActiveOutlined style={{ color: "#ADFF2F" }} />
+          </Badge>
+        </Link>
       </IconButton>
       <IconButton onClick={onLogout}>
         <Typography>
@@ -115,7 +126,7 @@ const Navbar = () => {
             <Grid item>
               <Link to="/" style={{ color: "#ADFF2F", textDecoration: "none" }}>
                 <Typography variant="h4" color="secondary">
-                  Nutflix
+                  RentFlix
                 </Typography>
               </Link>
             </Grid>
