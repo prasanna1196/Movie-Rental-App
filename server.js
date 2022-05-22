@@ -23,4 +23,4 @@ app.use("/api/messages", require("./routes/messages"));
 
 const PORT = 5000;
 
-app.listen(PORT, () => `Server started on PORT ${PORT}`);
+app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
